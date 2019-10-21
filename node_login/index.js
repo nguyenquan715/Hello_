@@ -57,18 +57,22 @@ app.post("/login",(req,res)=>{
 	var password=req.body.password;
 	if(userName && password){
 		connection.connect(function(err){
-			if(err) throw err;
-			connection.query("select * from accounts where username="+userName+"and password="+password+";",function(err,result,fields){
-				if(err) throw err;
-				if(result.length>0){
-					req.session.loggedin=true;
-					req.session.username=userName;
-					res.redirect("/user");
-				}else{
-					res.send("Incorrect Username and/or Password!");
-				}
-				res.end();
-			});
+			if(err) console.log("Connection Error!");
+			else{
+				connection.query("select * from accounts where username=?and password=?",[userName,password],function(err,result,fields){
+					if(err) console.log("Query Error!");
+					else{
+						if(result.length>0){
+							req.session.loggedin=true;
+							req.session.username=userName;
+							res.redirect("/user");
+						}else{
+							res.send("Incorrect Username and/or Password!");
+						}
+						res.end();
+					}
+				});
+			}
 		});
 	}else{
 		res.send("Please enter Username and Password!");
