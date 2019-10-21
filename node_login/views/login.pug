@@ -1,0 +1,16 @@
+extends layout
+
+block layout-content
+	div.View.LoginView
+		h1.Banner LOGIN
+		div.Login
+			div.FormLogin
+				form(action="/login",method="POST")
+					div.InputUser
+						label(for="userName") User Name
+						input(id="name",type="text",name='userName')
+					div.InputUser
+						label(for="password") Password
+						input(id="pass",type="password",name="password")
+					div.InputUser
+						input.NavButton#login(type="submit",value="Log in")
