@@ -1,0 +1,19 @@
+extends layout
+
+block layout-content
+	div.View.RegisterView
+		h1.Banner Register
+		div.Login
+			div.FormLogin
+				form(action="/register",method="POST")
+					div.InputUser
+						label(for="email") Email
+						input#email(type="text",name="email",placeholder="nguyenvana@gmail.com")
+					div.InputUser
+						label(for="userName") User Name
+						input#name(type="text",name='userName')
+					div.InputUser
+						label(for="password") Password
+						input#pass(type="password",name="password")
+					div.InputUser
+						input.NavButton#register(type="submit",value="Register")
