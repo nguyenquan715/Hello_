@@ -1,5 +1,6 @@
 const auth=require("../controllers/authController.js");
 
+
 module.exports.home=(app)=>{
 	app.get("/",auth.home);
 }

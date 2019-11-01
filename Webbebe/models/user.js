@@ -27,7 +27,10 @@ module.exports=function(sequelize,Sequelize){
 		},
 		password:{
 			type:Sequelize.STRING,
-			allowNull:false
+			allowNull:false,
+			validate:{
+				len:[8,15]
+			}
 		},
 		status:{
 			type:Sequelize.ENUM('active','inactive'),
