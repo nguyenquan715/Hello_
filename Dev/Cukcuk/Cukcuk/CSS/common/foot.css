@@ -1,0 +1,75 @@
+﻿#foot {
+    position: absolute;
+    bottom: 0;
+    left:0;
+    right:0;
+    margin:0 8px 8px 8px;
+    height: 29px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 15px;
+    border: 1px solid #c8c7c7;
+
+}
+.foot1{
+    display:flex;
+    align-items:center;
+    margin-left:8px;
+}
+    .foot1 button {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border: 0px;
+        background-image: url('/Contents/Images/page-first.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-color:transparent;
+        margin-right: 8px;
+        margin-left: 8px;
+    }
+button#first {
+    background-image: url('/Contents/Images/page-first.png');
+}
+button#prev {
+    background-image: url('/Contents/Images/page-prev.png');
+}
+button#next {
+    background-image: url('/Contents/Images/page-next.png');
+}
+button#last {
+    background-image: url('/Contents/Images/page-last.png');
+}
+button#refresh {
+    background-image: url('/Contents/Images/refresh.png');
+    width: 16px;
+    height: 16px;
+    margin:0 8px;
+}
+.foot1 select{
+    display:inline-block;
+    width:50px;
+    height:22px;
+}
+.foot1 .area{
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+}
+.foot1 .area .page{
+    margin:0 8px;
+}
+.foot1 .page input{
+    display:inline-block;
+    width:30px;
+    height:22px;
+    text-align:center;
+}
+.foot1 #size_page{
+    margin-left:8px;
+}
+.foot2{
+    margin-right:8px;
+}
+

@@ -1,0 +1,152 @@
+﻿
+#content{
+    position:absolute;
+    left:0;
+    right:0;
+    top:55px;
+    bottom:35px;
+    padding-left:8px;
+    padding-right:8px;
+}
+
+.intro{
+    height:45px;
+    display:flex;
+    align-items:center;
+}
+
+.intro1{
+    display:flex;
+    align-items:center;
+}
+.intro1 img{
+    width:17px;
+    height:17px;
+}
+.intro1 a{
+    font-size:17px;
+    text-decoration:none;
+    color:#026b97;
+}
+
+.toolbar {
+    position: absolute;
+    top: 45px;
+    left: 8px;
+    right: 8px;
+    height: 29px;
+    background-color: #ededed;
+    font-size: 12px;
+    display: flex;
+    border: 1px solid #c8c7c7;
+    padding: 2px;
+    z-index:2;
+}
+.tool1,.tool2{
+    display:flex;
+    align-items:center;
+}
+.tool1{
+    border-right: 1px solid gray;
+}
+.tool11 {
+    display: flex;
+    align-items: center;
+    padding:4px;
+    background-color: #ededed;
+    border:1px solid transparent;
+    white-space:nowrap;
+    height:23px;
+}
+.tool11 img{
+    width:16px;
+    height:16px;
+    margin-right:8px;
+}
+.disable {
+    cursor: not-allowed;
+}
+.enable{
+    cursor:pointer;
+}
+.enable:hover{
+    background-color:white;
+    border:1px solid #0071c1;
+}
+
+.data {
+    overflow: auto;
+    position: absolute;
+    top: 70px;
+    bottom: 0;
+    left:8px;
+    right:8px;
+    z-index:1;
+}
+.data table{
+    border-collapse:collapse;
+    border: 1px solid #c8c7c7;
+}
+.data table thead tr{
+    height:55px;
+}
+    .data table th {
+        background-color: #ededed;
+        position: sticky;
+        top: 0;
+        font-weight: normal;
+        padding: 4px;
+        border: 1px solid #c8c7c7;
+    }
+.data table tbody{
+ 
+}
+.data table tbody tr {
+    height: 24px;
+    font-size: 10px;
+    cursor:pointer;
+}
+    .data table tbody tr:hover {
+        background-color: #9bc7e366;
+    }
+.data table thead th .th2{
+    margin-top:4px;
+    display:flex;
+}
+.data table th .th2 p {
+    height: 28px;
+    border: 1px solid #c8c7c7;
+    border-right-color: transparent;
+    padding: 8px;
+    background-color: white;
+}
+.data table th .th2 input {
+    border: 1px solid #c8c7c7;
+    padding: 4px;
+}
+.data table td {
+    padding-left: 8px;
+    padding-right: 8px;
+    border: 1px solid #c8c7c7;
+}
+
+#load{
+    width:40px;
+    height:40px;
+    position:fixed;
+    top:275px;
+    left:800px;
+}
+#load img{
+    width:32px;
+    height:32px;
+}
+
+.warning {
+    border: 1px solid red !important;
+    background-image: url('/Contents/Images/exclamation-mark.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right;
+}
+

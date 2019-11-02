@@ -1,0 +1,29 @@
+﻿@font-face {
+	font-family: 'Roboto-Regular';
+	src: url('/Contents/fonts/Roboto-Regular.ttf') format('truetype');
+}
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto_Regular';
+    box-sizing: border-box;
+}
+body{
+   
+}
+#menu{
+    position:absolute;
+    left:0;
+    top:0;
+    bottom:0;
+    width:230px;
+}
+.right{
+    position:absolute;
+    left:230px;
+    right:0;
+    top:0;
+    bottom:0;
+}
+
+

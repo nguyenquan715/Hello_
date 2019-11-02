@@ -1,0 +1,175 @@
+﻿@font-face {
+	font-family: 'Roboto-Regular';
+	src: url('/Contents/fonts/Roboto-Regular.ttf') format('truetype');
+}
+
+* {
+	padding: 0;
+	margin: 0;
+	font-family: 'Roboto-Regular';
+	box-sizing: border-box;
+}
+
+/*Dialog add customer*/
+#dia_add {
+    font-size: 12px;
+}
+
+.dia_form {
+}
+
+.couple {
+    display: flex;
+    width: 643px;
+    justify-content: space-between;
+    margin-bottom: -1px;
+}
+
+#dia_add .KH {
+    margin-bottom: 5px;
+}
+
+.KH {
+    width: 310px;
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+}
+
+    .KH input {
+        width: 190px;
+        height: 22px;
+        border: 1px solid gray;
+        border-radius: 3px;
+        padding-left:5px;
+    }
+
+    .KH select {
+        width: 190px;
+        height: 22px;
+        border: 1px solid gray;
+        border-radius: 3px;
+    }
+
+    .KH textarea {
+        width: 523px;
+        height: 60px;
+        border: 1px solid gray;
+        border-radius: 3px;
+        padding-left: 5px;
+    }
+
+    .KH span strong {
+        font-weight: normal;
+        color: red;
+    }
+
+#company, #address {
+    width: 523px;
+}
+
+.KH1 {
+    width: 643px;
+}
+.check{
+    margin-left:120px;
+    display:flex;
+}
+.checkbox{
+    display:flex;
+    align-items:center;
+    margin-right:20px;
+}
+
+.buttons {
+    width: 643px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.bt1{
+
+}
+.bt2{
+    display:flex;
+}
+.bt1 button, .bt2 button{
+    height:25px;
+}
+#help{
+    width:70px;   
+}
+#save{
+    width:86px;
+    margin-right:10px;
+}
+#saveadd {
+    width: 125px;
+    margin-right: 10px; 
+}
+#cancel{
+    width:86px;
+}
+.bt1 button, .bt2 button{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.bt1 button img, .bt2 button img{
+    width:16px;
+    height:16px;
+    margin-right:7px;
+}
+
+
+/*Dialog delete customer*/
+.dia_delete{
+
+}
+
+.contain {
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.contain img {
+    width: 32px;
+    height: 32px;
+    margin-right: 15px;
+}
+
+.contain p {
+    font-size: 15px;
+}
+.option{
+    margin-top:10px;
+    margin-right:5px;
+}
+.option button{
+    display:inline-block;
+    width:75px;
+    height:24px;
+    float:right;
+    font-size:13px;
+    margin-left:5px;
+}
+
+/*Chung*/
+.ui-widget-header {
+    border: 1px solid #257ada;
+    border-radius: 0;
+    color: white;
+    background-color: #257ada;
+    margin: -3px;
+    margin-bottom: 3px;
+    margin-right: -4px;
+}
+
+.ui-widget.ui-widget-content {
+    border: 3px solid #257ada;
+    border-radius: 0;
+}
+
+
