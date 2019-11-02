@@ -3,7 +3,6 @@ const express=require("express");
 const path=require("path");
 const session=require("express-session");
 const bodyParser=require("body-parser");
-const passport=require("passport");
 const models=require("./models");
 require("dotenv").config();
 
@@ -20,8 +19,6 @@ app.use(bodyParser.json());
 
 /*Auth Configure*/
 app.use(session({secret:"woieiueuudsdfw4932dfsf",resave:true,saveUninitialized:true}));
-app.use(passport.initialize());
-app.use(passport.session());
 
 /*Sync Database*/
 // models.sequelize.sync().then(()=>{
