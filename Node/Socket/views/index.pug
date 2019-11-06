@@ -1,0 +1,12 @@
+extends layout
+
+block layout-content
+  h1 Hello
+  div.ChatRoom
+      h3.ChatRoomName Web Developers
+      div.Messages
+      div.EnterMess
+        input(type="text", placeholder="Viết tin nhắn của bạn ở đây...")
+        button#SendMess Send
+block layout-script
+  script(src="scripts/test.js")

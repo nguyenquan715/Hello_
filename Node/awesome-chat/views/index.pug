@@ -1,0 +1,11 @@
+extends layout
+
+block layout-content
+	h1.Logo Awesome Chat
+	div.ChatRoom
+		div.Messages
+		div.EnterMess
+			input(type="text")
+			button#SendMess Send
+block layout-script
+	script(src="scripts/chat.js")
