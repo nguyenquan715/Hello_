@@ -13,8 +13,28 @@ body{
 	background-color:tomato;
 	color:white;
 }
-.ChatRoom{
+.ChatRooms{
+	position: absolute;
 	left:10px;
+	width:180px;
+	top:100px;
+	bottom:10px;
+	border:1px solid tomato;
+}
+	.ChatRooms .Room{
+		color:white;
+		border:1px solid tomato;
+		background-color: tomato;
+		font-size:20px;
+		padding:15px;
+		margin-bottom: 15px;
+	}
+	.ChatRooms .Room:hover{
+		background-color: black;
+		cursor:pointer;
+	}
+.ChatRoom{
+	left:200px;
 	right:10px;
 	top:100px;
 	bottom:10px;

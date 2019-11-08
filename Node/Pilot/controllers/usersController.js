@@ -60,6 +60,7 @@ module.exports={
 						req.session.login=2;
 						res.redirect('/admin');
 					}else{
+						req.session.userId=results[0]["userId"];
 						req.session.login=1;
 						res.redirect('/user');
 					}

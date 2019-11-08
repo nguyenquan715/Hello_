@@ -59,6 +59,17 @@ var server=app.listen(port,()=>{
 const io=require('socket.io')(server);
 io.on('connection',function(socket){
 	console.log('A user connected');
+	socket.on('join_room',(room)=>{
+		if(socket.room){
+			socket.leave(socket.room);
+		}
+		socket.join(room);
+		socket.room=room;
+	});
+	socket.on('send_mess',(msg)=>{
+		io.sockets.in(socket.room).emit('res_mess',msg);
+	});
+
 });
 
 

@@ -162,8 +162,9 @@ a {
 }
 
 .UserView {
-  background: url("/contents/imgs/dev.jpg") left bottom;
-  background-size: cover;
+  /*background: url("/contents/imgs/dev.jpg") left bottom;
+  background-size: cover;*/
+  background-color:black;
 }
 .AdminView{
   background: url("/contents/imgs/admin.jpg") right top;
@@ -222,74 +223,66 @@ a {
   }
 
 /*Chat Room*/
-.ChatRoom{
-  position:absolute;
-  right:10%;
-  left:40%;
-  top:100px;
-  bottom:100px;
-  border:3px solid tomato;
+.ChatRooms{
+  position: absolute;
+  left:20px;
+  width:170px;
+  top:110px;
+  bottom:90px;
+  border:1px solid tomato;
 }
-  .ChatRoom .ChatRoomName{
+  .ChatRooms .Room{
+    color:white;
+    border:1px solid tomato;
+    background-color: tomato;
+    font-size:20px;
+    padding:15px;
+    margin-bottom: 15px;
+  }
+  .ChatRooms .Room:hover{
+    background-color: black;
+    cursor:pointer;
+  }
+.ChatRoom{
+  left:200px;
+  right:20px;
+  top:110px;
+  bottom:90px;
+  position: absolute;
+}
+  .ChatRoom .Messages{
+    border:1px solid tomato;
     position: absolute;
     top:0;
+    bottom: 50px;
     left:0;
     right:0;
-    height:40px;
-    background-color:tomato;
-    letter-spacing: 3px;
-    text-align:center;
-    line-height: 40px;
+    color:white;
   }
-  .ChatRoom .Messages{
-    position: absolute;
-    top:40px;
-    left:0;
-    right:0;
-    bottom:40px;
-    background-color:rgba(255,255,255,0.5);
-    overflow: auto;
-  }
-    .ChatRoom .Messages .Message{
-      
-    }
   .ChatRoom .EnterMess{
-    border-top:1px solid tomato;
+    border:1px solid red;
     position: absolute;
     bottom: 0;
+    height:50px;
     left:0;
     right:0;
-    height:40px;
+    display: flex;
   }
-    .ChatRoom .EnterMess input{
-      position: absolute;
-      left:0;
-      top:0;
-      bottom:0;
-      width:80%;
-      border:0;
-      background-color:rgba(255,255,255,0.5);
-      font-size: 20px;
-      color:black;
-    }
-    .ChatRoom .EnterMess #SendMess{
-      position: absolute;
-      right:0;
-      width:20%;
-      top:0;
-      bottom: 0;
-      border:0;
-      background-color:tomato;
-      font-weight: bold;
-      font-size:20px;
-      color:white;
-    }
-#Friends{
-  display: flex;
-  flex-direction: column;
-}
-button.Friend{
-  border:1px solid tomato;
-  background-color:tomato;
-  color:white;
-}
+  .ChatRoom .EnterMess input{
+    flex-grow: 8;
+    padding:5px;
+    font-size:20px;
+    background-color:rgba(255,255,255);
+    border:0;
+  }
+  #SendMess{
+    flex-grow: 2;
+    border:0;
+    background-color: tomato;
+    color:white;
+    font-size: 25px;
+    font-weight: bold;
+  }
+  #SendMess:hover{
+    color:black;
+  }

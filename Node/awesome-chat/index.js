@@ -40,10 +40,17 @@ const io=require('socket.io')(server);
 io.on('connection', function(socket) {
    console.log('A user connected');
    socket.on('nickname',(data)=>{
-   		socket.nickname=data;
-   })
+   	socket.nickname=data;
+   });
+   socket.on('join_room',(data)=>{
+      if(socket.room){
+         socket.leave(socket.room);
+      }
+      socket.room=data;
+      socket.join(data);
+   });
    socket.on('sendMess',(data)=>{
-   	  socket.broadcast.emit('resMess','<strong>'+socket.nickname+':</strong>'+'<p>'+data+'</p>');
+   	  io.sockets.in(socket.room).emit('resMess','<strong>'+socket.nickname+':</strong>'+'<p>'+data+'</p>');
    });
    socket.on('disconnect', function () {
       console.log('A user disconnected');

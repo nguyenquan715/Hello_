@@ -3,17 +3,12 @@ extends layout
 block layout-content
   div.View.UserView
     h1.Banner Howdy, #{userProfile.nickname}!
-    div.Message
-      div.Title
-        h3 Making Us the Best
-        h1 Teammate Profile
-      pre.Details=JSON.stringify(userProfile, null, 2)
-      div#Friends
+    div.ChatRooms
+      
     div.ChatRoom
-      h3.ChatRoomName Web Developers
       div.Messages
       div.EnterMess
-        input(type="text", placeholder="Viết tin nhắn của bạn ở đây...")
+        input(type="text")
         button#SendMess Send
     div.NavButtons
       a(href="/logout")
