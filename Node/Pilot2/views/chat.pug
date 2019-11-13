@@ -1,0 +1,67 @@
+extends layout
+
+block layout-style
+	link(rel="stylesheet" href="css/style2.css")
+block layout-content
+	div.View
+		div.NavBar
+			a.Page
+				h2 h_
+			a.Page#Notifi(title="Notification",href="/notifi")
+			a.Page.Active#Mess(title="Message",href="/chat")
+			a.Page#Person(title="Profile",href="/profile")
+		div.ListOption
+			div.Account
+				div.Avatar
+				h2 Nguyễn Quân
+			div.Option
+				h3 Friend list
+				div.List
+					div.Friend
+						div.Avatar
+						p Nguyễn Quân
+					div.Friend
+						div.Avatar
+						p Nguyễn Quân
+					div.Friend
+						div.Avatar
+						p Nguyễn Quân
+					div.Friend
+						div.Avatar
+						p Nguyễn Quân
+					div.Friend
+						div.Avatar
+						p Nguyễn Quân
+					div.Friend
+						div.Avatar
+						p Nguyễn Quân
+					div.Friend
+						div.Avatar
+						p Nguyễn Quân
+					div.Friend
+						div.Avatar
+						p Nguyễn Quân
+					div.Friend
+						div.Avatar
+						p Nguyễn Quân
+					div.Friend
+						div.Avatar
+						p Nguyễn Quân
+					div.Friend
+						div.Avatar
+						p Nguyễn Quân
+					div.Friend
+						div.Avatar
+						p Nguyễn Quân
+					div.Friend
+						div.Avatar
+						p Nguyễn Quân
+		div.Detail
+			div.ChatRoom
+				h3.ChatRoomName Nguyễn Quân
+				div.Messages 
+				div.MessInput
+					textarea#EnterMess(rows="3",type="text",name="EnterMess")
+					button.Buttons#SendMess Send
+				
+block layout-script

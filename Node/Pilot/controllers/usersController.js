@@ -3,6 +3,7 @@ const validator=require('validator');
 const bcrypt=require('bcrypt');
 
 module.exports={
+	//Hiển thị home page
 	home:(req,res)=>{
 		res.render('index',{title:'Home'});
 		res.end();
@@ -61,6 +62,7 @@ module.exports={
 						res.redirect('/admin');
 					}else{
 						req.session.userId=results[0]["userId"];
+						req.session.nickname=results[0]["lastName"]+' '+results[0]["firstName"];
 						req.session.login=1;
 						res.redirect('/user');
 					}
@@ -83,7 +85,7 @@ module.exports={
 	/*Private Page*/
 	user:(req,res)=>{
 		if(req.session.login==1){
-			res.render('user',{title:'Profile',userProfile:{nickname:"NAQ",country:"VietNam"}});
+			res.render('user',{title:'Profile',nickname:req.session.nickname});
 			res.end();
 		}
 		else{
@@ -106,6 +108,13 @@ module.exports={
 	notFound:(req,res)=>{
 		res.render('notFound',{title:"Error"});
 		res.end();
+	},
+
+	/*Trang hiển thị thông báo và tìm bạn bè*/
+	/*Test*/
+	notifi:(req,res)=>{
+		/*Xác minh session trước*/
+		res.render('notifi',{title:'Notification',nickname:req.session.nickname});
 	},
 
 	/*Log out*/

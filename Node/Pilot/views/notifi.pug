@@ -1,0 +1,12 @@
+extends layout
+
+block layout-content
+	div.View.UserView
+		h1.Banner #{nickname}
+		div.Notifi
+		div.Search
+			input(type="text")
+			div.List
+block layout-script
+	script(src="scripts/libs/socket.io.js")
+	script(src="scripts/users.js")

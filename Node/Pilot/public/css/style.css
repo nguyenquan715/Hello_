@@ -223,15 +223,44 @@ a {
   }
 
 /*Chat Room*/
+.AddChatRoom{
+  position: absolute;
+  left:20px;
+  width:220px;
+  top:110px;
+  height:40px;
+  border:1px solid tomato;
+  background-color:tomato;
+  font-size:25px;
+  color:white;
+  text-align:center;
+  padding:5px;
+  font-weight:bold;
+}
+.AddChatRoom:hover{
+  color:black;
+  cursor:pointer;
+}
 .ChatRooms{
   position: absolute;
   left:20px;
-  width:170px;
-  top:110px;
-  bottom:90px;
+  width:220px;
+  top:170px;
+  height:200px;
   border:1px solid tomato;
+  overflow: auto;
 }
-  .ChatRooms .Room{
+.GroupChats{
+  position: absolute;
+  left:20px;
+  width:220px;
+  top:400px;
+  bottom: 90px;
+  border:1px solid tomato;
+  overflow: auto;
+}
+
+  .Room{
     color:white;
     border:1px solid tomato;
     background-color: tomato;
@@ -239,21 +268,37 @@ a {
     padding:15px;
     margin-bottom: 15px;
   }
-  .ChatRooms .Room:hover{
+  .Room:hover{
     background-color: black;
     cursor:pointer;
   }
 .ChatRoom{
-  left:200px;
+  left:250px;
   right:20px;
-  top:110px;
+  top:135px;
   bottom:90px;
   position: absolute;
 }
+  .ChatRoom .ChatRoomName{
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    height:50px;
+    text-align:center;
+    color:white;
+    font-weight:bold;
+    background-color:tomato;
+    border:1px solid tomato;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    font-size:25px;
+    padding:5px;
+  }
   .ChatRoom .Messages{
     border:1px solid tomato;
     position: absolute;
-    top:0;
+    top:50px;
     bottom: 50px;
     left:0;
     right:0;
@@ -286,3 +331,45 @@ a {
   #SendMess:hover{
     color:black;
   }
+
+.Notifi{
+  position: absolute;
+  top:135px;
+  bottom:90px;
+  left:20px;
+  width:400px;
+  border:1px solid tomato;
+  padding:5px;
+  color:white;
+}
+.Search{
+  position: absolute;
+  top:135px;
+  bottom: 90px;
+  left:450px;
+  right:20px;
+}
+  .Search input{
+    display: block;
+    border:1px solid tomato;
+    position: absolute;
+    left:0;
+    width:100%;
+    top:0;
+    height:50px;
+    font-size: 25px;
+  }
+  .Search .List{
+    border:1px solid tomato;
+    padding:5px;
+    position: absolute;
+    left:0;
+    right:0;
+    top:70px;
+    bottom: 0;
+    color:white;
+  }
+.MakeFriend{
+  background-color: white;
+  color:black;
+}

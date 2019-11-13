@@ -9,7 +9,16 @@ module.exports=(sequelize,Sequelize)=>{
 		chatRoomName:{
 			type:Sequelize.STRING,
 			allowNull:false
+		},
+		chatRoomType:{
+			type:Sequelize.BOOLEAN,
+			defaultValue:true
 		}
 	});
+	// ChatRoom.sync({alter:true}).then(()=>{
+	// 	console.log('success!');
+	// }).catch((err)=>{
+	// 	console.log(err);
+	// });
 	return ChatRoom;
 }

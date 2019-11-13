@@ -23,17 +23,17 @@ insert into friends values
 	(10,3);
 
 insert into chatrooms values
-	(1,'Nguyễn Anh-Chu Vi'),
-	(2,'Nguyễn Anh-Phạm Ban'),
-	(3,'Nguyễn Anh-Lê Na'),
-	(4,'Nguyễn Anh-Pi Pi'),
-	(5,'Chu Vi-Pa Tin'),
-	(6,'Chu Vi-q q'),
-	(7,'Chu Vi-Ka Ka'),
-	(8,'Pa Tin-Phạm Ban'),
-	(9,'Pa Tin-Mo Mo'),
-	(10,'Pa Tin-Phạm Thái'),
-	(11,'Phạm Ban-q q');
+	(1,'Nguyễn Quân-Phạm Thái'),
+	(2,'Nguyễn Quân-Lê Hiền'),
+	(3,'Nguyễn Quân-Phạm Ban'),
+	(4,'Nguyễn Quân-Nguyễn Minh'),
+	(5,'Phạm Thái-Nguyễn Tới'),
+	(6,'Phạm Thái-Phạm Quyết'),
+	(7,'Phạm Thái-Chu Vi'),
+	(8,'Nguyễn Tới-Hiền Lê'),
+	(9,'Nguyễn Tới-Phạm Lài'),
+	(10,'Phạm Tới-Cao Lệ'),
+	(11,'Lê Hiền-Phạm Quyết');
 
 insert into chatroommembers values
 	(1,1),
@@ -59,10 +59,5 @@ insert into chatroommembers values
 	(11,4),
 	(11,6);
 
-"select c.chatRoomId,c.chatRoomName,concat(u.lastName,' ',u.firstName) fullName
-from chatrooms c
-inner join chatroommembers cm on cm.chatRoomId=c.chatRoomId
-inner join users u on u.userId=cm.userId
-where c.chatRoomId in (select chatRoomId from chatroommembers where userId=1) and u.userId!=1;"
 
 

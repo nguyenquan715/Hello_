@@ -35,10 +35,10 @@ module.exports=(sequelize,Sequelize)=>{
 			defaultValue:false
 		}
 	});
-	// User.sync({alter:true}).then(()=>{
+	// User.sync({force:true}).then(()=>{
 	// 	console.log('success!');
 	// }).catch((err)=>{
 	// 	console.log(err);
-	// })
+	// });
 	return User;
 }

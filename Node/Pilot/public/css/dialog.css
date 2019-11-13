@@ -1,0 +1,30 @@
+.Dialog{
+
+}
+	.DialogGroup{
+		
+	}
+		.GroupName{
+			margin:10px;
+		}
+			.GroupName #InputName{
+				font-size:20px;
+				padding:5px;
+			}
+		.GroupMember{
+			margin:10px;
+		}
+			.GroupMember #MemberFilter{
+				font-size:20px;
+				padding:5px;
+			}
+			.GroupMember #Member{
+				overflow: auto;
+				height:100px;
+			}
+		.AddGroup{
+			float:right;
+		}
+.MemberAdded{
+	background-color:aqua;
+}

@@ -17,5 +17,10 @@ module.exports=(sequelize,Sequelize)=>{
 			}
 		}
 	});
+	// Friend.sync({force:true}).then(()=>{
+	// 	console.log('success!');
+	// }).catch((err)=>{
+	// 	console.log(err);
+	// });
 	return Friend;
 }

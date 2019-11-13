@@ -1,11 +1,17 @@
 extends layout
 
+block layout-style
+  link(rel="stylesheet",href="css/libs/jquery-ui.min.css")
+  link(rel="stylesheet", href="css/dialog.css")
+
 block layout-content
   div.View.UserView
-    h1.Banner Howdy, #{userProfile.nickname}!
+    h1.Banner #{nickname}
+    p.AddChatRoom +
     div.ChatRooms
-      
+    div.GroupChats
     div.ChatRoom
+      div.ChatRoomName
       div.Messages
       div.EnterMess
         input(type="text")
@@ -13,6 +19,19 @@ block layout-content
     div.NavButtons
       a(href="/logout")
         div.NavButton Log out
+      a(href="/notifi")
+        div.NavButton Notification
+  div.Dialog
+    div.DialogGroup
+      div.GroupName
+        input#InputName(type="text",placeholder="Tên nhóm của bạn...")
+      div.GroupMember
+        input#MemberFilter(type="text",placeholder="Tìm thành viên...")
+        div#Member
+      div.AddGroup
+        button Tạo nhóm
 block layout-script
+  script(src="scripts/libs/jquery-ui.min.js")
   script(src="scripts/libs/socket.io.js")
   script(src="scripts/users.js")
+  script(src="scripts/dialog.js")

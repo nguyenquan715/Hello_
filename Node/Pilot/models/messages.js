@@ -24,5 +24,10 @@ module.exports=(sequelize,Sequelize)=>{
 			}
 		}
 	});
+	// Message.sync({force:true}).then(()=>{
+	// 	console.log('success!');
+	// }).catch((err)=>{
+	// 	console.log(err);
+	// });
 	return Message;
 }

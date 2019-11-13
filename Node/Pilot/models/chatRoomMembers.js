@@ -17,5 +17,10 @@ module.exports=(sequelize,Sequelize)=>{
 			}
 		}
 	});
+	// ChatRoomMember.sync({force:true}).then(()=>{
+	// 	console.log('success!');
+	// }).catch((err)=>{
+	// 	console.log(err);
+	// });
 	return ChatRoomMember;
 }
