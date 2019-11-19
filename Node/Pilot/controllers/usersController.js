@@ -11,7 +11,6 @@ module.exports={
 
 	/*Sign up*/
 	getSignup:(req,res)=>{
-		res.setHeader("Content-Type", "text/html");
 		res.render('signup',{title:'Sign Up'});
 		res.end();
 	},
@@ -64,7 +63,7 @@ module.exports={
 						req.session.userId=results[0]["userId"];
 						req.session.nickname=results[0]["lastName"]+' '+results[0]["firstName"];
 						req.session.login=1;
-						res.redirect('/user');
+						res.redirect('/profile');
 					}
 					res.end();
 				}else{
@@ -83,9 +82,29 @@ module.exports={
 	},
 
 	/*Private Page*/
-	user:(req,res)=>{
+	profile:(req,res)=>{
 		if(req.session.login==1){
-			res.render('user',{title:'Profile',nickname:req.session.nickname});
+			res.render('profile',{title:'Profile',nickname:req.session.nickname});
+			res.end();
+		}
+		else{
+			res.redirect('/error');
+			res.end();
+		}
+	},
+	chat:(req,res)=>{
+		if(req.session.login){
+			res.render('chat',{title:'Message',nickname:req.session.nickname});
+			res.end();
+		}
+		else{
+			res.redirect('/error');
+			res.end();
+		}
+	},
+	notifi:(req,res)=>{
+		if(req.session.login){
+			res.render('notifi',{title:'Notification',nickname:req.session.nickname});
 			res.end();
 		}
 		else{
@@ -110,15 +129,8 @@ module.exports={
 		res.end();
 	},
 
-	/*Trang hiển thị thông báo và tìm bạn bè*/
-	/*Test*/
-	notifi:(req,res)=>{
-		/*Xác minh session trước*/
-		res.render('notifi',{title:'Notification',nickname:req.session.nickname});
-	},
-
 	/*Log out*/
-	logout:(req,res)=>{
+	signout:(req,res)=>{
 		req.session.destroy((err)=>{
 			if(err) console.log(err);
 			else console.log("Session was destroyed!");

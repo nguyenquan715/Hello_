@@ -1,2 +1,4 @@
 exports.user=require('./usersRoute.js');
-exports.userPage=require('./userPageRoute.js');
+exports.notifi=require('./notifiRoute.js');
+exports.chat=require('./chatRoute.js');
+exports.profile=require('./profileRoute.js');

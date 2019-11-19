@@ -1,12 +1,29 @@
 extends layout
 
+block layout-style
+	link(rel="stylesheet" href="css/style2.css")
 block layout-content
-	div.View.UserView
-		h1.Banner #{nickname}
-		div.Notifi
-		div.Search
-			input(type="text")
-			div.List
+	div.View
+		div.NavBar
+			a.Page
+				h2 h_
+			a.Page.Active#Notifi(title="Notification",href="/notifi")
+			a.Page#Mess(title="Message",href="/chat")
+			a.Page#Person(title="Profile",href="/profile")
+		div.ListOption
+			div.Account
+				div.Avatar
+				h2 #{nickname}
+			div.Option
+				h3 Notification
+				div.List
+					
+		div.Detail
+			div.Search
+				input#searchInput(type="text",name="search")
+				button.Buttons#search Search
+			div.Results
+								
 block layout-script
 	script(src="scripts/libs/socket.io.js")
-	script(src="scripts/users.js")
+	script(src="scripts/notifi.js")

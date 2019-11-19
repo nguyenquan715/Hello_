@@ -1,15 +1,23 @@
 extends layout
-
+block layout-style
+	link(rel="stylesheet" href="css/style1.css")
 block layout-content
-  div.View.WelcomeView
-    h1.Banner WHATABYTE
-    div.Message
-      div.Title
-        h3 Making the Best
-        h1 Food For Devs
-      span.Details Access the WHATABYTE Team Portal
-    div.NavButtons
-      a(href="/signin")
-        div.NavButton Sign In
-      a(href="/signup")
-        div.NavButton Sign Up
+	.View.HomeView
+		.Head
+			h1.Banner HOME
+		.Mid
+			.Content
+				span#LetOne H
+				span#LetTwo e
+				span#LetThree l
+				span#LetFour l
+				span#LetFive o
+				span#Space _
+		.Foot
+			.NavButtons
+				a(href='/signin')
+					.NavButton Sign In
+				a(href='/signup')
+					.NavButton Sign Up
+		
+

@@ -43,19 +43,28 @@ routes.user.getSignup(app);
 routes.user.postSignup(app);
 routes.user.getSignin(app);
 routes.user.postSignin(app);
-routes.user.user(app);
+routes.user.profile(app);
+routes.user.chat(app);
+routes.user.notifi(app);
 routes.user.admin(app);
 routes.user.notFound(app);
-routes.user.notifi(app);
-routes.user.logout(app);
+routes.user.signout(app);
+/*Notifi*/
+routes.notifi.search(app);
+/*Chat*/
+routes.chat.friends(app);
+routes.chat.groups(app);
+/*Profile*/
+routes.profile.info(app);
+routes.profile.edit(app);
 /*User Page*/
-routes.userPage.info(app);
-routes.userPage.friends(app);
-routes.userPage.members(app);
-routes.userPage.createGroup(app);
-routes.userPage.groups(app);
-routes.userPage.search(app);
-
+// routes.userPage.info(app);
+// routes.userPage.friends(app);
+// routes.userPage.members(app);
+// routes.userPage.createGroup(app);
+// routes.userPage.groups(app);
+// routes.userPage.search(app);
+/*Profile Page*/
 /*Listen*/
 var server=app.listen(port,()=>{
 	console.log("Listening at http://localhost:"+port);
@@ -68,17 +77,17 @@ io.on('connection',function(socket){
 	socket.on('nickname',(name)=>{
 		socket.name=name;
 	});
-	socket.on('user',(userId)=>{
-		socket.userId='user'+userId;
-		socket.join('user'+userId);
+	socket.on('private',(id)=>{
+		socket.id='user'+id;
+		console.log(socket.id);
+		socket.join('user'+id);
 	});
-	socket.on('join_room',(room)=>{
+	socket.on('join_room',(roomId)=>{
 		if(socket.room){
 			socket.leave(socket.room);
-			socket.emit('refresh','');
 		}
-		socket.join(room);
-		socket.room=room;
+		socket.join(roomId);
+		socket.room=roomId;
 	});
 	socket.on('make_friend',(id)=>{
 		console.log(id);

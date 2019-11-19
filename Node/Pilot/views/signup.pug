@@ -1,28 +1,32 @@
 extends layout
 
+block layout-style
+	link(rel="stylesheet" href="css/style1.css")
+	link(rel="stylesheet",href="css/form.css")
 block layout-content
-	div.View.SignUpView
-		h1.Banner SIGN UP
-		div.Login
-			div.FormLogin
+	div.View.HomeView
+		div.Head
+			h1.Banner Sign Up
+		div.Mid
+			div.Content
 				form(action="/signup",method="POST")
-					div.InputUser
-						label(for="firstName") First Name
+					div.FormInput
+						label First Name
 						input#firstName(type="text",name='firstName')
-					div.InputUser
-						label(for="lastName") Last Name
+					div.FormInput
+						label Last Name
 						input#lastName(type="text",name='lastName')
-					div.InputUser
-						label(for="email") Email
+					div.FormInput
+						label Email
 						input#email(type="email",name="email",placeholder="nguyenvana@gmail.com")
-					div.InputUser
-						label(for="password") Password
-						input#pass(type="password",name="password")
-					div.InputUser
+					div.FormInput
+						label Password
+						input#password(type="password",name="password")
+					div.FormInput
 						label Birthday
 						div.birthday
 							select#dayOfBirth(name="dayOfBirth")
-								-for(let i=2;i<=31;i++)
+								-for(let i=1;i<=31;i++)
 									option(value=i) #{i}
 							select#monthOfBirth(name="monthOfBirth")
 								-for(let i=1;i<=12;i++)
@@ -31,12 +35,14 @@ block layout-content
 								-let year=new Date().getFullYear()
 								-for(let i=year;i>=1900;i--)
 									option(value=i) #{i}
-					div.InputUser
+					div.FormInput
 						label Gender
 						div.Gender
 							select#gender(name="gender")
 								-let gender=['Male','Female']
 								-for(let i=0;i<gender.length;i++)
 									option(value=i) #{gender[i]}
-					div.InputUser
-						input.NavButton#signup(type="submit",value="Sign up")
+					input#signup(type="submit",value="Sign Up")
+		div.Foot
+			h3.Title Hello_ | Let talk your way!
+block layout-script

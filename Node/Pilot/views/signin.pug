@@ -1,16 +1,23 @@
 extends layout
 
+block layout-style
+	link(rel="stylesheet" href="css/style1.css")
+	link(rel="stylesheet",href="css/form.css")
 block layout-content
-	div.View.LoginView
-		h1.Banner SIGN IN
-		div.Login
-			div.FormLogin
+	div.View.HomeView
+		div.Head
+			h1.Banner Sign In
+		div.Mid
+			div.Content
 				form(action="/signin",method="POST")
-					div.InputUser
-						label(for="email") Email
-						input(id="email",type="email",name='email')
-					div.InputUser
-						label(for="password") Password
-						input(id="pass",type="password",name="password")
-					div.InputUser
-						input.NavButton#login(type="submit",value="Sign in")
+					div.FormInput
+						label Email
+						input#email(type="email",name="email")
+					div.FormInput
+						label Password
+						input#password(type="password",name="password")
+					input#signin(type="submit",value="Sign In")
+		div.Foot
+			h3.Title Hello_ | Let talk your way!
+block layout-script
+	

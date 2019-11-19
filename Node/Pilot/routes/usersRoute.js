@@ -22,8 +22,14 @@ module.exports={
 		app.post('/signin',user.postSignin);
 	},
 	//Hiển thị trang người dùng
-	user:(app)=>{
-		app.get('/user',user.user);
+	profile:(app)=>{
+		app.get('/profile',user.profile);
+	},
+	chat:(app)=>{
+		app.get('/chat',user.chat);
+	},
+	notifi:(app)=>{
+		app.get('/notifi',user.notifi);
 	},
 	//Hiển thị trang admin
 	admin:(app)=>{
@@ -33,12 +39,8 @@ module.exports={
 	notFound:(app)=>{
 		app.get('/error',user.notFound);
 	},
-	//Notification
-	notifi:(app)=>{
-		app.get('/notifi',user.notifi);
-	},
 	//Đăng xuất
-	logout:(app)=>{
-		app.get('/logout',user.logout);
+	signout:(app)=>{
+		app.get('/signout',user.signout);
 	}
 }

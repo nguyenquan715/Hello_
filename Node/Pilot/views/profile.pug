@@ -1,0 +1,57 @@
+extends layout
+
+block layout-style
+	link(rel="stylesheet" href="css/style2.css")
+	link(rel="stylesheet",href="css/form.css")
+block layout-content
+	div.View
+		div.NavBar
+			a.Page
+				h2 h_
+			a.Page#Notifi(title="Notification",href="/notifi")
+			a.Page#Mess(title="Message",href="/chat")
+			a.Page.Active#Person(title="Profile",href="/profile")
+		div.ListOption
+			div.Account
+				div.Avatar
+				h2 #{nickname}
+			div.Option
+				a.Option1.Active(href="/information") Change my information
+				a.Option1(href="/signout") Sign out
+		div.Detail
+			h2 Change my information
+			div.Information
+				form(action="/api/profile/edit",method="POST")
+						div.FormInput
+							label First Name
+							input#firstName(type="text",name='firstName')
+						div.FormInput
+							label Last Name
+							input#lastName(type="text",name='lastName')
+						div.FormInput
+							label Email
+							input#email(type="email",name="email",readonly)
+						div.FormInput
+							label Birthday
+							div.birthday
+								select#dayOfBirth(name="dayOfBirth")
+									-for(let i=1;i<=31;i++)
+										option(value=i) #{i}
+								select#monthOfBirth(name="monthOfBirth")
+									-for(let i=1;i<=12;i++)
+										option(value=i) #{i}
+								select#yearOfBirth(name="yearOfBirth")
+									-let year=new Date().getFullYear()
+									-for(let i=year;i>=1900;i--)
+										option(value=i) #{i}
+						div.FormInput
+							label Gender
+							div.Gender
+								select#gender(name="gender")
+									-let gender=['Male','Female']
+									-for(let i=0;i<gender.length;i++)
+										option(value=i) #{gender[i]}
+						input#save(type="submit",value="Save")
+block layout-script
+	script(src="scripts/libs/socket.io.js")
+	script(src="scripts/profile.js")
