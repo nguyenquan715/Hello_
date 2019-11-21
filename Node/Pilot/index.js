@@ -51,6 +51,8 @@ routes.user.notFound(app);
 routes.user.signout(app);
 /*Notifi*/
 routes.notifi.search(app);
+routes.notifi.id(app);
+routes.notifi.addFriend(app);
 /*Chat*/
 routes.chat.friends(app);
 routes.chat.groups(app);
@@ -74,14 +76,32 @@ var server=app.listen(port,()=>{
 const io=require('socket.io')(server);
 io.on('connection',function(socket){
 	console.log('A user connected');
+	//Tên người dùng
 	socket.on('nickname',(name)=>{
 		socket.name=name;
 	});
-	socket.on('private',(id)=>{
-		socket.id='user'+id;
-		console.log(socket.id);
+	//Người dùng sẽ join vào một phòng chỉ của duy nhất họ
+	socket.on('private_room',(id)=>{
 		socket.join('user'+id);
+		socket.id=id;
 	});
+	//Gửi lời mời kết bạn
+	socket.on('make_friend',(id)=>{
+		var obj={};
+		obj.senderId=socket.id;
+		obj.receiverId=id;
+		obj.name=socket.name;
+		io.sockets.in('user'+id).emit('make_friend',obj);
+	});
+	// socket.on('reload_group',(data)=>{
+	// 	let arrId=JSON.parse(data);
+	// 	io.sockets.in(socket.userId).emit('reload_group','');
+	// 	for(let i=0;i<arrId.length;i++){
+	// 		io.sockets.in('user'+arrId[i]).emit('reload_group','');
+	// 	}
+	// });
+	
+	//Join vào phòng chat bất kì
 	socket.on('join_room',(roomId)=>{
 		if(socket.room){
 			socket.leave(socket.room);
@@ -89,17 +109,8 @@ io.on('connection',function(socket){
 		socket.join(roomId);
 		socket.room=roomId;
 	});
-	socket.on('make_friend',(id)=>{
-		console.log(id);
-		io.sockets.in('user'+id).emit('make_friend','<p>'+socket.name+' đã gửi lời mời kết bạn cho bạn.</p>');
-	});
-	socket.on('reload_group',(data)=>{
-		let arrId=JSON.parse(data);
-		io.sockets.in(socket.userId).emit('reload_group','');
-		for(let i=0;i<arrId.length;i++){
-			io.sockets.in('user'+arrId[i]).emit('reload_group','');
-		}
-	});
+	
+	//Nhắn tin
 	socket.on('send_mess',(msg)=>{
 		io.sockets.in(socket.room).emit('res_mess','<p><strong>'+socket.name+': </strong>'+msg+'</p>');
 	});
