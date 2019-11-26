@@ -1,11 +1,13 @@
 extends layout
 
 block layout-style
-	link(rel="stylesheet" href="css/style2.css")
+	link(rel="stylesheet",href="css/libs/jquery-ui.min.css")
+	link(rel="stylesheet",href="css/style2.css")
+	link(rel="stylesheet",href="css/dialog.css")
 block layout-content
 	div.View
 		div.NavBar
-			a.Page
+			a.Page(href="/admin")
 				h2 h_
 			a.Page#Notifi(title="Notification",href="/notifi")
 			a.Page.Active#Mess(title="Message",href="/chat")
@@ -20,7 +22,7 @@ block layout-content
 					
 				h3#ListGroup Group list
 				div.List#GroupList.Hide
-					
+					div.AddGroup(title="Tạo nhóm mới") +
 		div.Detail
 			div.ChatRoom
 				h3.ChatRoomName
@@ -28,7 +30,22 @@ block layout-content
 				div.MessInput
 					textarea#EnterMess(rows="3",type="text",name="EnterMess")
 					button.Buttons#SendMess Send
-				
+		div#DiaGroup
+			div.DiaHead
+				input(type="text",name="GroupName",placeholder="Đặt tên nhóm")
+			div.DiaMid
+				div.DiaMidLeft
+					div.LeftTop
+						input#FindMember(type="text",name="FindMember",placeholder="Tìm kiếm người để thêm")
+					div.LeftBottom
+				div.DiaMidRight
+					h3 Thành viên đã chọn
+					div.Members
+			div.DiaFoot
+				button.Buttons#CreateGroup Tạo nhóm
+				button.Buttons#Cancel Hủy
 block layout-script
 	script(src="scripts/libs/socket.io.js")
+	script(src="scripts/libs/jquery-ui.min.js")
 	script(src="scripts/chat.js")
+	script(src="scripts/dialog.js")

@@ -8,5 +8,9 @@ module.exports={
 	/* Danh sách group chat*/
 	groups:(app)=>{
 		app.get('/api/chat/groups',chat.groups);
+	},
+	/*Tìm thành viên cho group*/
+	search:(app)=>{
+		app.get('/api/chat/search/:keyWord',chat.search);
 	}
 }

@@ -22,6 +22,14 @@ module.exports=(sequelize,Sequelize)=>{
 				model:'chatrooms',
 				key:'chatRoomId'
 			}
+		},
+		createdAt:{
+			type:Sequelize.DATE,
+			defaultValue:Sequelize.NOW
+		},
+		updatedAt:{
+			type:Sequelize.DATE,
+			defaultValue:Sequelize.NOW
 		}
 	});
 	// Message.sync({force:true}).then(()=>{

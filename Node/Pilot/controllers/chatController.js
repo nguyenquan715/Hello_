@@ -4,12 +4,9 @@ module.exports={
 	/* Danh sách bạn bè*/
 	friends:(req,res)=>{
 		let id=req.session.userId;
-		let query="select c.chatRoomId,concat(u.lastName,' ',u.firstName) fullName "+
-				  		"from chatrooms c "+
-						"inner join chatroommembers cm on cm.chatRoomId=c.chatRoomId "+
-						"inner join users u on u.userId=cm.userId "+
-						"where c.chatRoomId in (select chatRoomId from chatroommembers where userId="+id+") and u.userId!="+id+" and c.chatRoomType=true;"
-		models.sequelize.query(query).then(([results,metadata])=>{
+		let query=`call listFriend(${id});`
+		models.sequelize.query(query).then((results)=>{
+			console.log(results);
 			res.send(results);
 			res.end();
 		}).catch((err)=>{
@@ -19,11 +16,23 @@ module.exports={
 	/* Danh sách group chat*/
 	groups:(req,res)=>{
 		let userId=req.session.userId;
-		let query="select c.chatRoomId, c.chatRoomName "+
-		"from chatrooms c "+
-		"inner join chatroommembers cm on cm.chatRoomId=c.chatRoomId "+
-		"inner join users u on u.userId=cm.userId "+
-		"where c.chatRoomType=false and cm.userId="+userId;
+		let query=`call listGroup(${userId});`
+		models.sequelize.query(query).then((results)=>{
+			console.log(results);
+			res.send(results);
+			res.end();
+		}).catch((err)=>{
+			console.log(err);
+		});
+	},
+	/*Tìm thành viên cho group*/
+	search:(req,res)=>{
+		let key=req.params["keyWord"];
+		let id=req.session.userId;
+		let query="select f.userId2 userId,concat(u.lastName,' ',u.firstName) fullName "+
+		"from users u "+
+		"inner join friends f on f.userId2=u.userId "+
+		"where f.userId1="+id+" and(lastName like '%"+key+"%' or firstName like '%"+key+"%');";
 		models.sequelize.query(query).then(([results,metadata])=>{
 			res.send(results);
 			res.end();

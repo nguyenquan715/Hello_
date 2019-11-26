@@ -6,7 +6,7 @@ block layout-style
 block layout-content
 	div.View
 		div.NavBar
-			a.Page
+			a.Page(href="/admin")
 				h2 h_
 			a.Page#Notifi(title="Notification",href="/notifi")
 			a.Page#Mess(title="Message",href="/chat")
@@ -16,7 +16,7 @@ block layout-content
 				div.Avatar
 				h2 #{nickname}
 			div.Option
-				a.Option1.Active(href="/information") Change my information
+				a.Option1.Active Change my information
 				a.Option1(href="/signout") Sign out
 		div.Detail
 			h2 Change my information
@@ -53,5 +53,4 @@ block layout-content
 										option(value=i) #{gender[i]}
 						input#save(type="submit",value="Save")
 block layout-script
-	script(src="scripts/libs/socket.io.js")
 	script(src="scripts/profile.js")

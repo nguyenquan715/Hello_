@@ -1,0 +1,26 @@
+extends layout
+
+block layout-style
+	link(rel="stylesheet" href="css/style2.css")
+	link(rel="stylesheet",href="css/form.css")
+block layout-content
+	div.View
+		div.NavBar
+			a.Page.Active(href="/admin")
+				h2 h_
+			a.Page#Notifi(title="Notification",href="/notifi")
+			a.Page#Mess(title="Message",href="/chat")
+			a.Page#Person(title="Profile",href="/profile")
+		div.ListOption
+			div.Account
+				div.Avatar
+				h2 #{nickname}
+			div.Option
+				a.Option1.Active(href="/admin") User Management
+		div.Detail
+			div.Search
+				input#searchInput(type="text",name="search")
+				button.Buttons#search Search
+			div.Results
+block layout-script
+	script(src="scripts/admin.js")

@@ -36,6 +36,9 @@ body{
 		align-items: center;
 		margin-bottom:15px;
 	}
+	.NavBar a{
+		text-decoration: none;
+	}
 		.Page h2{
 			color:white;
 			font-size:40px;
@@ -102,7 +105,7 @@ body{
 		right:0;	
 		overflow-y: auto;
 		overflow-wrap: break-word;
-		border:1px solid red;
+		border-top:2px solid black;
 	}
 		/*Profile*/
 		.Option1{
@@ -127,10 +130,27 @@ body{
 			text-align: center;
 			background-color:tomato;
 			color:white;
+			border-bottom:1px solid red;
+		}
+		.Option h3:hover{
+			cursor: pointer;
 		}
 		/**/
 		.List{
 			
+			}
+			.List .AddGroup{
+				text-align: center;
+				font-size:25px;
+				padding:2px;
+				background-color:#f55c5c;
+				color:white;
+				font-weight: bold;
+				border-bottom: 1px solid red;
+			}
+			.List .AddGroup:hover{
+				color:black;
+				cursor:pointer;
 			}
 			.List p{
 				border-bottom: 1px solid gray;
@@ -216,11 +236,12 @@ body{
 	.Results{
 		position: absolute;
 		top:115px;
-		bottom: 15px;
+		bottom: 230px;
 		left:0;
 		right:0;
 		padding:10px;
 		overflow: auto;
+		border-bottom:1px solid tomato;
 	}
 		.Results .Result{
 			display: flex;
@@ -232,6 +253,41 @@ body{
 			.Account h3{
 				color:white;
 			}
+	.PersonInfo{
+		position: absolute;
+		bottom: 15px;
+		height:200px;
+		left:0;
+		right:0;
+		padding:10px;
+		overflow: auto;
+		display: flex;
+		justify-content: center;
+		align-items:center;
+	}
+		.PersonInfo .EachInfo{
+			padding:5px;
+		}
+			.EachInfo table{
+				border-collapse: collapse;
+			}
+				.EachInfo table tr{
+					
+				}
+				.EachInfo table td{
+					border:1px solid white;
+					font-size:20px;
+					padding:10px;
+					color:white;
+					width:250px;
+					text-align: center;
+				}
+				.EachInfo table th{
+					border:1px solid white;
+					color:white;
+					font-size: 25px;
+					padding:10px;
+				}
 	.ChatRoom{
 		position: absolute;
 		top:10px;

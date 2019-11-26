@@ -8,5 +8,8 @@ module.exports={
 	},
 	addFriend:(app)=>{
 		app.post('/api/notifi/addfriend',notifi.addFriend);
+	},
+	info:(app)=>{
+		app.get('/api/notifi/info/:id',notifi.info);
 	}
 }

@@ -1,9 +1,10 @@
 const models=require('../models');
 
 module.exports={
+	/*Thông tin user*/
 	info:(req,res)=>{
 		let id=req.session.userId;
-		let query="select * from users where userId="+id;
+		let query="select * from users where userId="+id+" limit 1;";
 		models.sequelize.query(query).then(([results,metadata])=>{
 			res.send(results);
 			res.end();
@@ -11,13 +12,18 @@ module.exports={
 			console.log(err);
 		})
 	},
+	/*Sửa thông tin user*/
 	edit:(req,res)=>{
 		let id=req.session.userId;
 		let firstName=req.body.firstName;
 		let lastName=req.body.lastName;
-		let birthday=new Date(Number(req.body.yearOfBirth),Number(req.body.monthOfBirth)-1,Number(req.body.dayOfBirth));
-		let gender=req.body.gender;
-		models.user.update({firstName:firstName,lastName:lastName,birthday:birthday,gender:gender},{where:{userId:id}}).then(()=>{
+		let year=Number(req.body.yearOfBirth);
+		let month=Number(req.body.monthOfBirth);
+		let day=Number(req.body.dayOfBirth);
+		let birthday=`${year}-${month}-${day}`;
+		let gender=Number(req.body.gender);
+		let query=`call updateUser(${id},'${firstName}','${lastName}','${birthday}',${gender});`
+		models.sequelize.query(query).then(()=>{
 			res.redirect('/profile');
 			res.end();
 		}).catch((err)=>{

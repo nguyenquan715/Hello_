@@ -48,25 +48,26 @@ routes.user.chat(app);
 routes.user.notifi(app);
 routes.user.admin(app);
 routes.user.notFound(app);
+routes.user.blocked(app);
+routes.user.back(app);
 routes.user.signout(app);
 /*Notifi*/
 routes.notifi.search(app);
 routes.notifi.id(app);
 routes.notifi.addFriend(app);
+routes.notifi.info(app);
 /*Chat*/
 routes.chat.friends(app);
 routes.chat.groups(app);
+routes.chat.search(app);
 /*Profile*/
 routes.profile.info(app);
 routes.profile.edit(app);
-/*User Page*/
-// routes.userPage.info(app);
-// routes.userPage.friends(app);
-// routes.userPage.members(app);
-// routes.userPage.createGroup(app);
-// routes.userPage.groups(app);
-// routes.userPage.search(app);
-/*Profile Page*/
+/*Admin*/
+routes.admin.list(app);
+routes.admin.block(app);
+routes.admin.unlock(app);
+
 /*Listen*/
 var server=app.listen(port,()=>{
 	console.log("Listening at http://localhost:"+port);

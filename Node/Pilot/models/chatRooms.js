@@ -13,9 +13,17 @@ module.exports=(sequelize,Sequelize)=>{
 		chatRoomType:{
 			type:Sequelize.BOOLEAN,
 			defaultValue:true
+		},
+		createdAt:{
+			type:Sequelize.DATE,
+			defaultValue:Sequelize.NOW
+		},
+		updatedAt:{
+			type:Sequelize.DATE,
+			defaultValue:Sequelize.NOW
 		}
 	});
-	// ChatRoom.sync({alter:true}).then(()=>{
+	// ChatRoom.sync({force:true}).then(()=>{
 	// 	console.log('success!');
 	// }).catch((err)=>{
 	// 	console.log(err);

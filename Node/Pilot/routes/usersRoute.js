@@ -39,6 +39,12 @@ module.exports={
 	notFound:(app)=>{
 		app.get('/error',user.notFound);
 	},
+	blocked:(app)=>{
+		app.get('/blocked',user.blocked);
+	},
+	back:(app)=>{
+		app.get('/back',user.back);
+	},
 	//Đăng xuất
 	signout:(app)=>{
 		app.get('/signout',user.signout);

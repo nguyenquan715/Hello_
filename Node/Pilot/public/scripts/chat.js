@@ -32,6 +32,39 @@ $(document).ready(function(){
 		$('#GroupList').toggleClass('Hide');
 	});
 
+	/**
+	 * Thêm group mới
+	 */
+	/*Tìm thành viên cho group*/
+	$(document).on('blur','#FindMember',function(){
+		let keyWord=$('#FindMember').val();
+		$.ajax({
+			method:"GET",
+			url:"/api/chat/search/"+keyWord,
+			dataType:"json"
+		}).done(function(res){
+			$('.LeftBottom').html('');
+			for(let i=0;i<res.length;i++){
+				let result=$('<div class="Member"></div>').data('userId',res[i]["userId"]);
+				result.append('<div class="MemAvatar"></div><h3>'+res[i]["fullName"]+'</h3></div>');
+				$('.LeftBottom').append(result);
+			}
+		}).fail((err)=>{
+			console.log(err);
+		});
+	});
+	/*Thêm thành viên cho Group*/
+	$(document).on('click','.LeftBottom .Member',function(){
+		let result=$('<div class="Member"></div>').data('userId',$(this).data('userId'));
+		result.append($(this).html());
+		$('.DiaMidRight .Members').append(result);
+		$(this).empty();
+	});
+	/*Xóa thành viên khỏi group*/
+	$(document).on('click','.Members .Member',function(){
+		$(this).empty();
+	});
+
 	/*Sự kiện khi nhấn vào một Room*/
 	$(document).on('click','.Room',function(){
 		$('.ChatRoomName').text($(this).find('p').text());

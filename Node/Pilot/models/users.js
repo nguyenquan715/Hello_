@@ -24,15 +24,28 @@ module.exports=(sequelize,Sequelize)=>{
 		},
 		birthday:{
 			type:Sequelize.DATEONLY,
-			allowNull:false
+			allowNull:false,
+			defaultValue:Sequelize.NOW
 		},
 		gender:{
 			type:Sequelize.BOOLEAN,
 			defaultValue:true
 		},
+		blocked:{
+			type:Sequelize.BOOLEAN,
+			defaultValue:false
+		},
 		isAdmin:{
 			type:Sequelize.BOOLEAN,
 			defaultValue:false
+		},
+		createdAt:{
+			type:Sequelize.DATE,
+			defaultValue:sequelize.NOW
+		},
+		updatedAt:{
+			type:Sequelize.DATE,
+			defaultValue:sequelize.NOW
 		}
 	});
 	// User.sync({force:true}).then(()=>{

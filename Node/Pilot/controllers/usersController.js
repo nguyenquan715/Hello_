@@ -19,14 +19,18 @@ module.exports={
 		let lastName=req.body.lastName;
 		let email=req.body.email;
 		let password=req.body.password;
-		let birthday=new Date(Number(req.body.yearOfBirth),Number(req.body.monthOfBirth)-1,Number(req.body.dayOfBirth));
-		let gender=req.body.gender;
+		let year=Number(req.body.yearOfBirth);
+		let month=Number(req.body.monthOfBirth);
+		let day=Number(req.body.dayOfBirth);
+		let birthday=`${year}-${month}-${day}`;
+		let gender=Number(req.body.gender);
 		/*Validate input*/
 
-		models.sequelize.query("select * from users where email='"+email+"'").then(([results,metadata])=>{
+		models.sequelize.query("select * from users where email='"+email+"' limit 1").then(([results,metadata])=>{
 			if(!results[0]){
 				password=bcrypt.hashSync(password,10);
-				models.user.create({firstName:firstName,lastName:lastName,email:email,password:password,birthday:birthday,gender:gender}).then(()=>{
+				let query=`call insertUser('${firstName}','${lastName}','${email}','${password}','${birthday}',${gender});`
+				models.sequelize.query(query).then(()=>{
 					res.redirect('/signin');
 					res.end();
 				}).catch((err)=>{
@@ -53,23 +57,31 @@ module.exports={
 	postSignin:(req,res)=>{
 		let email=req.body.email;
 		let password=req.body.password;
-		models.sequelize.query("select * from users where email='"+email+"'").then(([results,metadata])=>{
+		models.sequelize.query("select * from users where email='"+email+"' limit 1").then(([results,metadata])=>{
 			if(results[0]){
-				if(bcrypt.compareSync(password,results[0]["password"])){
-					if(results[0]["isAdmin"]){
-						req.session.login=2;
-						res.redirect('/admin');
-					}else{
-						req.session.userId=results[0]["userId"];
-						req.session.nickname=results[0]["lastName"]+' '+results[0]["firstName"];
-						req.session.login=1;
-						res.redirect('/profile');
-					}
-					res.end();
-				}else{
-					res.send('User or Password incorrect!');
+				if(results[0]["blocked"]){
+					res.redirect('/blocked');
 					res.end();
 				}
+				else{
+					if(bcrypt.compareSync(password,results[0]["password"])){
+						if(results[0]["isAdmin"]){
+							req.session.userId=results[0]["userId"];
+							req.session.nickname=results[0]["lastName"]+' '+results[0]["firstName"];
+							req.session.login=2;
+							res.redirect('/admin');
+						}else{
+							req.session.userId=results[0]["userId"];
+							req.session.nickname=results[0]["lastName"]+' '+results[0]["firstName"];
+							req.session.login=1;
+							res.redirect('/profile');
+						}
+						res.end();
+					}else{
+						res.send('User or Password incorrect!');
+						res.end();
+					}
+				}				
 			}else{
 				res.send('User or Password incorrect!');
 				res.end();
@@ -83,7 +95,7 @@ module.exports={
 
 	/*Private Page*/
 	profile:(req,res)=>{
-		if(req.session.login==1){
+		if(req.session.login){
 			res.render('profile',{title:'Profile',nickname:req.session.nickname});
 			res.end();
 		}
@@ -114,7 +126,7 @@ module.exports={
 	},
 	admin:(req,res)=>{
 		if(req.session.login==2){
-			res.render('admin',{title:'Admin',userProfile:{nickname:"Admin",country:"VietNam"}});
+			res.render('admin',{title:'Admin',nickname:req.session.nickname});
 			res.end();
 		}
 		else{
@@ -122,15 +134,25 @@ module.exports={
 			res.end();
 		}
 	},
-
 	/*Error*/
 	notFound:(req,res)=>{
-		res.render('notFound',{title:"Error"});
+		res.render('error',{title:"Error"});
 		res.end();
 	},
-
+	blocked:(req,res)=>{
+		res.render('block',{title:"Blocked"});
+		res.end();
+	},
+	back:(req,res)=>{
+		res.redirect('/notifi');
+		res.end();
+	},
 	/*Log out*/
 	signout:(req,res)=>{
+		// models.sequelize.close((err)=>{
+		// 	if(err) console.log(err);
+		// 	else console.log("Closed connection!");
+		// });
 		req.session.destroy((err)=>{
 			if(err) console.log(err);
 			else console.log("Session was destroyed!");

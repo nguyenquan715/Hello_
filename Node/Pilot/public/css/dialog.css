@@ -1,30 +1,123 @@
-.Dialog{
-
+#DiaGroup{
+	
 }
-	.DialogGroup{
-		
+.DiaHead{
+	position: absolute;
+	left:0;
+	right:0;
+	top:0;
+	height:50px;
+}
+	.DiaHead input{
+		border:1px solid black;
+		font-size:20px;
+		padding:5px;
+		width:80%;
+		position: absolute;
+		top:50%;
+		left: 50%;
+		transform: translate(-50%,-50%);
 	}
-		.GroupName{
-			margin:10px;
+	.DiaHead input:focus{
+		outline:none;
+	}
+.DiaMid{
+	border-top:1px solid black;
+	border-bottom:1px solid black;
+	position: absolute;
+	left:0;
+	right:0;
+	top:60px;
+	bottom:70px;
+	display: flex;
+}
+	.DiaMidLeft{
+		width:50%;
+		border-right:1px solid black;
+	}
+		.LeftTop{
+			border-bottom:1px solid black;
+			padding:10px;
 		}
-			.GroupName #InputName{
-				font-size:20px;
+		.LeftTop input{
+			font-size:20px;
+			padding:5px;
+			width:100%;
+		}
+		.LeftBottom{
+			display:flex;
+			flex-direction: column;
+			overflow:auto;
+			padding:5px;
+		}
+			.LeftBottom .Member{
 				padding:5px;
+				display:flex;
+				align-items: center;
 			}
-		.GroupMember{
-			margin:10px;
+			.LeftBottom .Member:hover{
+				background-color:#ddf7f7;
+				cursor:pointer;
+			}
+			.Member .MemAvatar{
+				width:25px;
+				height:25px;
+				background-image: url('/contents/imgs/avatar.png');
+				background-repeat: no-repeat;
+    			background-size: 25px;
+    			margin-right:10px;
+			}
+			.Member h3{
+				color:black;
+				font-size:18px;
+			}
+	.DiaMidRight{
+		width:50%;
+	}
+		.DiaMidRight h3{
+			padding:5px;
 		}
-			.GroupMember #MemberFilter{
-				font-size:20px;
-				padding:5px;
-			}
-			.GroupMember #Member{
-				overflow: auto;
-				height:100px;
-			}
-		.AddGroup{
-			float:right;
+		.DiaMidRight .Members{
+
 		}
-.MemberAdded{
-	background-color:aqua;
+		.Members .Member{
+			padding:5px;
+			display:flex;
+			align-items: center;
+		}
+		.Members .Member:hover{
+			background-color:#ddf7f7;
+			cursor:pointer;
+		}
+.DiaFoot{
+	position: absolute;
+	left:0;
+	right:0;
+	bottom: 0;
+	height:70px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+	.DiaFoot button{
+		font-size:20px;
+	}
+	.DiaFoot button:focus{
+		outline:none;
+	}
+
+
+.ui-widget-content{
+	padding:0;
+}
+.ui-widget-header{
+	background-color:#f55c5c;
+	border:1px solid #f55c5c;
+	margin:-1px;
+	border-bottom:1px solid black;
+	margin-bottom:10px;
+}
+.ui-dialog-title{
+	color:white;
+	font-size:20px;
 }

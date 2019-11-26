@@ -1,17 +1,18 @@
 $(document).ready(function(){
-	$('.AddChatRoom').on('click',function(){
-		$('.DialogGroup').dialog('open');
+	$(document).on('click','.AddGroup',function(){
+		$('#DiaGroup').dialog('open');
 	});
-	$(document).on('click','.AddGroup button',function(){
-		$('.DialogGroup').dialog('close');
-		$('#InputName').val('');
-		$('#MemberFilter').val('');
-		$('.MemberAdded').removeClass('MemberAdded')
-		$('#Member').html('');
+	$(document).on('click','#Cancel',function(){
+		$('#DiaGroup').dialog('close');
+		$('#DiaGroup input').val('');
+		$('.Members').html('');
+		$('.LeftBottom').html('');
 	});
 },false);
-$('.DialogGroup').dialog({
+$('#DiaGroup').dialog({
 	autoOpen:false,
 	modal:true,
-	title:'Tạo nhóm'
+	title:'Tạo nhóm',
+	height:500,
+	width:500
 });
