@@ -44,6 +44,7 @@ $(document).ready(function(){
 	});
 	/*Từ chối lời mời kết bạn*/
 	$(document).on('click','.Deny',function(){
+		let senderName=$(this).parent().data('senderName');
 		$(this).parent().html('<span>Bạn đã từ chối lời mời kết bạn của</span><strong> '+senderName+'</strong>');
 	});
 	/*Tìm kiếm bạn bè*/

@@ -29,7 +29,7 @@ $(document).ready(function(){
 	}).done(function(res){
 		for(let i=0;i<res.length;i++){
 			let room=$('<div class="Room"></div>').data('roomId',res[i]["chatRoomId"]);
-			room.append('<div class="Avatar"></div><p>'+res[i]["chatRoomName"]+'</p>');
+			room.append('<div class="RoomAcc"><div class="Avatar"></div><p>'+res[i]["chatRoomName"]+'</p></div><div class="GroupAction"><div class="GroupPlus" title="Thêm thành viên"></div><div class="GroupMinus" title="Rời khỏi nhóm"></div></div>');
 			$('#GroupList .Rooms').append(room);
 		}
 	});
@@ -114,10 +114,24 @@ $(document).ready(function(){
 			$('#GroupList .Rooms').empty();
 			for(let i=0;i<res.length;i++){
 				let room=$('<div class="Room"></div>').data('roomId',res[i]["chatRoomId"]);
-				room.append('<div class="Avatar"></div><p>'+res[i]["chatRoomName"]+'</p>');
+				room.append('<div class="RoomAcc"><div class="Avatar"></div><p>'+res[i]["chatRoomName"]+'</p></div><div class="GroupAction"><div class="GroupPlus" title="Thêm thành viên"></div><div class="GroupMinus" title="Rời khỏi nhóm"></div></div>');
 				$('#GroupList').append(room);
 			}
 		});
+	});
+
+	/*Rời khỏi nhóm*/
+	$(document).on('click','.GroupMinus',function(){
+		let roomId=$(this).parent().parent().data('roomId');
+		$.ajax({
+			method:'DELETE',
+			url:'/api/chat/removegroup/'+roomId
+		}).done((res)=>{
+			console.log('111111111111');
+			socket.emit("reload_group",'');
+		}).fail((err)=>{
+			console.log(err);
+		})
 	});
 
 	/*Sự kiện khi nhấn vào một Room*/

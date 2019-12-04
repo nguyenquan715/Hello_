@@ -178,6 +178,34 @@ body{
 				background-repeat: no-repeat;
 	    		background-size: 30px;
 			}
+			.List .Rooms .Room{
+				justify-content: space-between;
+			}
+				.Rooms .Room .RoomAcc{
+					display: flex;
+					align-items: center;
+				}
+				.Rooms .Room .GroupAction{
+					display:flex;
+					align-items: center;
+				}
+					.Rooms .Room .GroupAction .GroupPlus{
+						width:30px;
+						height:30px;
+						background-image: url('/contents/imgs/plus.png');
+						background-repeat: no-repeat;
+	    				background-size: 30px;
+					}
+					.Rooms .Room .GroupAction .GroupMinus{
+						width:30px;
+						height:30px;
+						background-image: url('/contents/imgs/minus.png');
+						background-repeat: no-repeat;
+	    				background-size: 30px;
+					}
+					.Rooms .Room .GroupAction .GroupPlus:hover,.Rooms .Room .GroupAction .GroupMinus:hover{
+						background-color:black;
+					}
 .Detail{
 	position: absolute;
 	top:0;

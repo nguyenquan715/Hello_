@@ -16,5 +16,10 @@ module.exports={
 	/*Tạo group mới*/
 	createGroup:(app)=>{
 		app.post('/api/chat/creategroup',chat.createGroup);
+	},
+	/*Rời khỏi nhóm*/
+	removeGroup:(app)=>{
+		app.delete('/api/chat/removegroup/:roomId',chat.removeGroup);
 	}
+
 }

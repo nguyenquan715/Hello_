@@ -73,5 +73,16 @@ module.exports={
 		}).catch((err)=>{
 			console.log(err);
 		});
+	},
+	/*Rời khỏi nhóm*/
+	removeGroup:(req,res)=>{
+		let roomId=req.params['roomId'];
+		let userId=req.session.userId;
+		let query=`delete from chatroommembers where chatRoomId=${roomId} and userId=${userId};`;
+		models.sequelize.query(query).then(([results,metadata])=>{
+			console.log(results);
+		}).catch((err)=>{
+			console.log(err);
+		})
 	}
 }
