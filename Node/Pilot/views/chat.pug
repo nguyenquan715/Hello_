@@ -23,6 +23,8 @@ block layout-content
 				h3#ListGroup Group list
 				div.List#GroupList.Hide
 					div.AddGroup(title="Tạo nhóm mới") +
+					div.Rooms
+						
 		div.Detail
 			div.ChatRoom
 				h3.ChatRoomName
@@ -32,7 +34,7 @@ block layout-content
 					button.Buttons#SendMess Send
 		div#DiaGroup
 			div.DiaHead
-				input(type="text",name="GroupName",placeholder="Đặt tên nhóm")
+				input#GroupName(type="text",name="GroupName",placeholder="Đặt tên nhóm")
 			div.DiaMid
 				div.DiaMidLeft
 					div.LeftTop

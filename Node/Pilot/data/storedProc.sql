@@ -35,10 +35,10 @@ DELIMITER;
 DROP procedure insertChatroom;
 
 DELIMITER $$
-create procedure insertChatroom(chatRoomName varchar(255))
+create procedure insertChatroom(chatRoomName varchar(255),chatRoomType tinyint(1) )
 	begin 
-		insert into chatrooms (chatRoomName,createdAt,updatedAt) values 
-			(chatRoomName,now(),now());
+		insert into chatrooms (chatRoomName,chatRoomType,createdAt,updatedAt) values 
+			(chatRoomName,chatRoomType,now(),now());
 	end$$
 DELIMITER;
 

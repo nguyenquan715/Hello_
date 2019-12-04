@@ -22,5 +22,17 @@ block layout-content
 				input#searchInput(type="text",name="search")
 				button.Buttons#search Search
 			div.Results
+			div.PersonInfo
+				div.EachInfo
+					table
+						tr
+							th Họ và tên
+							td#nameInfo
+						tr
+							th Ngày sinh
+							td#birthInfo
+						tr
+							th Giới tính
+							td#genderInfo
 block layout-script
 	script(src="scripts/admin.js")

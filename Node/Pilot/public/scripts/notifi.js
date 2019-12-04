@@ -4,7 +4,8 @@ $(document).ready(function(){
 	/*Join vào một room riêng*/
 	$.ajax({
 		method:"GET",
-		url:"/api/notifi/id"
+		url:"/api/notifi/id",
+		dataType:'json'
 	}).done(function(res){		
 		socket.emit('private_room',res['id']);
 	});
@@ -36,7 +37,6 @@ $(document).ready(function(){
 			method:"POST",
 			url:"/api/notifi/addfriend",
 			data:JSON.stringify(obj),
-			dataType:'json',
 			contentType:'application/json; charset=utf-8'
 		}).fail((err)=>{
 			console.log(err);
@@ -52,7 +52,8 @@ $(document).ready(function(){
 		$('.Results').html('');
 		$.ajax({
 			method:"GET",
-			url:"/api/notifi/search/"+keyWord
+			url:"/api/notifi/search/"+keyWord,
+			dataType:'json'
 		}).done(function(res){
 			for(let i=0;i<res.length;i++){
 				let result=$('<div class="Result"></div>').data('userId',res[i]["userId"]);
@@ -69,7 +70,8 @@ $(document).ready(function(){
 		let id=$(this).parent().parent().data('userId');
 		$.ajax({
 			method:"GET",
-			url:"api/notifi/info/"+id
+			url:"api/notifi/info/"+id,
+			dataType:'json'
 		}).done(function(res){
 			$('#nameInfo').text(res["fullName"]);
 			$('#birthInfo').text(res["birthday"]);

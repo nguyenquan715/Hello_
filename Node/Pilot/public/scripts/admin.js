@@ -2,15 +2,16 @@ $(document).ready(function(){
 	/*Danh sách user*/
 	$.ajax({
 		method:"GET",
-		url:"/api/admin/list"
+		url:"/api/admin/list",
+		dataType:'json'
 	}).done(function(res){
 		for(let i=0;i<res.length;i++){
 			let result=$('<div class="Result"></div>').data('userId',res[i]["userId"]);
 			result.append('<div class="Account"><div class="Avatar"></div><h3>'+res[i]["fullName"]+'</h3></div>');
 			if(res[i]["blocked"]){
-				result.append('<div class="Action"><button class="Buttons Unlock">Unlock</button></div>');
+				result.append('<div class="Action"><button class="Buttons Unlock">Unlock</button><button class="Buttons Info">Info</button></div>');
 			}
-			else result.append('<div class="Action"><button class="Buttons Block">Block</button></div>');
+			else result.append('<div class="Action"><button class="Buttons Block">Block</button><button class="Buttons Info">Info</button></div>');
 			$('.Results').append(result);
 		}
 	}).fail(function(err){
@@ -23,19 +24,40 @@ $(document).ready(function(){
 		$('.Results').html('');
 		$.ajax({
 			method:"GET",
-			url:"/api/notifi/search/"+keyWord
+			url:"/api/notifi/search/"+keyWord,
+			dataType:'json'
 		}).done(function(res){
 			for(let i=0;i<res.length;i++){
 				let result=$('<div class="Result"></div>').data('userId',res[i]["userId"]);
 				result.append('<div class="Account"><div class="Avatar"></div><h3>'+res[i]["fullName"]+'</h3></div>');
 				if(res[i]["blocked"]){
-					result.append('<div class="Action"><button class="Buttons Unlock">Unlock</button></div>');
+					result.append('<div class="Action"><button class="Buttons Unlock">Unlock</button><button class="Buttons Info">Info</button></div>');
 				}
-				else result.append('<div class="Action"><button class="Buttons Block">Block</button></div>');
+				else result.append('<div class="Action"><button class="Buttons Block">Block</button><button class="Buttons Info">Info</button></div>');
 
 				$('.Results').append(result);
 			}
 		}).fail(function(err){
+			console.log(err);
+		});
+	});
+
+	/*Info một user*/
+	$(document).on('click','button.Info',function(){
+		let id=$(this).parent().parent().data('userId');
+		$.ajax({
+			method:"GET",
+			url:"api/notifi/info/"+id,
+			dataType:'json'
+		}).done(function(res){
+			$('#nameInfo').text(res["fullName"]);
+			$('#birthInfo').text(res["birthday"]);
+			if(res["gender"]){
+				$('#genderInfo').text('Nữ');
+			}else{
+				$('#genderInfo').text('Nam');
+			}
+		}).fail((err)=>{
 			console.log(err);
 		});
 	});

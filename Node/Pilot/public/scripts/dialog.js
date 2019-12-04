@@ -2,6 +2,7 @@ $(document).ready(function(){
 	$(document).on('click','.AddGroup',function(){
 		$('#DiaGroup').dialog('open');
 	});
+	/*Hủy tạo nhóm*/
 	$(document).on('click','#Cancel',function(){
 		$('#DiaGroup').dialog('close');
 		$('#DiaGroup input').val('');
