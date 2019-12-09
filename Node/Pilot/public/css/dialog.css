@@ -1,3 +1,4 @@
+/*Add Group*/
 #DiaGroup{
 	
 }
@@ -106,6 +107,31 @@
 		outline:none;
 	}
 
+/*Out Group*/
+#DiaOutGroup{
+
+}
+#DiaOutGroup .Question{
+	position: absolute;
+	top:0;
+	bottom: 70px;
+	left:0;
+	right:0;
+	display:flex;
+	align-items: center;
+	margin-left:15px;
+}
+	.Question .QuestionImg{
+		width:55px;
+		height:50px;
+		background-image: url('/contents/imgs/question.png');
+		background-repeat: no-repeat;
+    	background-size: 50px;
+	}
+	.Question .QuestionContent{
+		margin-left:15px;
+		font-size:20px;
+	}
 
 .ui-widget-content{
 	padding:0;

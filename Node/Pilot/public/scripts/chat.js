@@ -48,10 +48,19 @@ $(document).ready(function(){
 	/*Tìm thành viên cho group*/
 	$(document).on('blur','#FindMember',function(){
 		let keyWord=$('#FindMember').val();
+		let ids=[];
+		$('.Members .Member').each(function(index,item){
+			ids.push($(this).data('userId'));			
+		});
+		let obj={
+			ids:ids
+		};
 		$.ajax({
-			method:"GET",
+			method:"POST",
 			url:"/api/chat/search/"+keyWord,
-			dataType:"json"
+			dataType:"json",
+			contentType:'application/json;charset=utf-8',
+			data:JSON.stringify(obj)
 		}).done(function(res){
 			$('.LeftBottom').html('');
 			for(let i=0;i<res.length;i++){
@@ -68,11 +77,11 @@ $(document).ready(function(){
 		let result=$('<div class="Member"></div>').data('userId',$(this).data('userId'));
 		result.append($(this).html());
 		$('.DiaMidRight .Members').append(result);
-		$(this).empty();
+		$(this).remove();
 	});
 	/*Xóa thành viên khỏi group*/
 	$(document).on('click','.Members .Member',function(){
-		$(this).empty();
+		$(this).remove();
 	});
 	/*Tạo nhóm*/
 	$(document).on('click','#CreateGroup',function(){
@@ -115,19 +124,20 @@ $(document).ready(function(){
 			for(let i=0;i<res.length;i++){
 				let room=$('<div class="Room"></div>').data('roomId',res[i]["chatRoomId"]);
 				room.append('<div class="RoomAcc"><div class="Avatar"></div><p>'+res[i]["chatRoomName"]+'</p></div><div class="GroupAction"><div class="GroupPlus" title="Thêm thành viên"></div><div class="GroupMinus" title="Rời khỏi nhóm"></div></div>');
-				$('#GroupList').append(room);
+				$('#GroupList .Rooms').append(room);
 			}
 		});
 	});
 
 	/*Rời khỏi nhóm*/
-	$(document).on('click','.GroupMinus',function(){
+	$(document).on('click','#DiaOutGroup #Yes_OutGroup',function(){
 		let roomId=$(this).parent().parent().data('roomId');
 		$.ajax({
 			method:'DELETE',
-			url:'/api/chat/removegroup/'+roomId
+			url:'/api/chat/outgroup/'+roomId
 		}).done((res)=>{
-			console.log('111111111111');
+			$('#DiaOutGroup').dialog('close');
+			console.log(res.response);
 			socket.emit("reload_group",'');
 		}).fail((err)=>{
 			console.log(err);
@@ -141,12 +151,42 @@ $(document).ready(function(){
 	});
 
 	/*Nhắn tin*/
+	$('#EnterMess').on('keydown',function(event){
+		if(event.keyCode=='13'&&!event.altKey){
+			let content=$(this).val();
+			socket.emit('mess',content);
+			$(this).val('');
+			//Trở về dòng đầu tiên
+			setCaretToPos(document.getElementById('#EnterMess'),1);
+		}
+		if(event.altKey&&event.keyCode=='13'){
+			//Xuống dòng tiếp theo
+			setCaretToPos(document.getElementById('#EnterMess'),3);
+		}
+	});
 	$('#SendMess').on('click',function(){
 		let content=$('#EnterMess').val();
-		socket.emit('send_mess',content);
+		socket.emit('mess',content);
 		$('#EnterMess').val('');
 	});
-	socket.on('res_mess',(content)=>{
+	socket.on('mess',(content)=>{
 		$('.Messages').append(content);
 	});
 },false);
+function setSelectionRange(input, selectionStart, selectionEnd) {
+	if (input.setSelectionRange) {
+	  input.focus();
+	  input.setSelectionRange(selectionStart, selectionEnd);
+	}
+	else if (input.createTextRange) {
+	  var range = input.createTextRange();
+	  range.collapse(true);
+	  range.moveEnd('character', selectionEnd);
+	  range.moveStart('character', selectionStart);
+	  range.select();
+	}
+  }
+  
+function setCaretToPos (input, pos) {
+	setSelectionRange(input, pos, pos);
+}

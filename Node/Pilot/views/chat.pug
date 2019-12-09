@@ -45,7 +45,28 @@ block layout-content
 					div.Members
 			div.DiaFoot
 				button.Buttons#CreateGroup Tạo nhóm
-				button.Buttons#Cancel Hủy
+				button.Buttons.Cancel Hủy
+		div#DiaAddToGroup
+			div.DiaHead
+				input#NameOfGroup(type="text",name="NameOfGroup",readonly)
+			div.DiaMid
+				div.DiaMidLeft
+					div.LeftTop
+						input#FindToAdd(type="text",name="FindToAdd",placeholder="Tìm kiếm người để thêm")
+					div.LeftBottom
+				div.DiaMidRight
+					h3 Thành viên đã chọn
+					div.Members
+			div.DiaFoot
+				button.Buttons#AddToGroup Thêm vào nhóm
+				button.Buttons.Cancel Hủy
+		div#DiaOutGroup
+			div.Question
+				.QuestionImg
+				.QuestionContent Bạn có chắc chắn muốn rời khỏi nhóm không?
+			div.DiaFoot
+				button.Buttons#Yes_OutGroup Có
+				button.Buttons#No_OutGroup Không
 block layout-script
 	script(src="scripts/libs/socket.io.js")
 	script(src="scripts/libs/jquery-ui.min.js")

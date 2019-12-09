@@ -11,15 +11,15 @@ module.exports={
 	},
 	/*Tìm thành viên cho group*/
 	search:(app)=>{
-		app.get('/api/chat/search/:keyWord',chat.search);
+		app.post('/api/chat/search/:keyWord',chat.search);
 	},
 	/*Tạo group mới*/
 	createGroup:(app)=>{
 		app.post('/api/chat/creategroup',chat.createGroup);
 	},
 	/*Rời khỏi nhóm*/
-	removeGroup:(app)=>{
-		app.delete('/api/chat/removegroup/:roomId',chat.removeGroup);
+	outGroup:(app)=>{
+		app.delete('/api/chat/outgroup/:roomId',chat.outGroup);
 	}
 
 }

@@ -29,10 +29,16 @@ module.exports={
 	search:(req,res)=>{
 		let key=req.params["keyWord"];
 		let id=req.session.userId;
+		let arrId=req.body['ids'];
+		console.log(arrId);
+		let arr='';
+		for(let i=0;i<arrId.length;i++){			
+				arr+=arrId[i]+',';
+		}
 		let query="select f.userId2 userId,concat(u.lastName,' ',u.firstName) fullName "+
 		"from users u "+
 		"inner join friends f on f.userId2=u.userId "+
-		"where f.userId1="+id+" and(lastName like '%"+key+"%' or firstName like '%"+key+"%');";
+		"where f.userId1="+id+" and f.userId2 not in ("+arr+id+")and(u.lastName like '%"+key+"%' or u.firstName like '%"+key+"%');";
 		models.sequelize.query(query).then(([results,metadata])=>{
 			res.send(results);
 			res.end();
@@ -75,12 +81,13 @@ module.exports={
 		});
 	},
 	/*Rời khỏi nhóm*/
-	removeGroup:(req,res)=>{
+	outGroup:(req,res)=>{
 		let roomId=req.params['roomId'];
 		let userId=req.session.userId;
 		let query=`delete from chatroommembers where chatRoomId=${roomId} and userId=${userId};`;
 		models.sequelize.query(query).then(([results,metadata])=>{
-			console.log(results);
+			res.status(200).json({response:'Removed group'});
+			res.end();
 		}).catch((err)=>{
 			console.log(err);
 		})

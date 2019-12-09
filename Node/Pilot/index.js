@@ -61,7 +61,7 @@ routes.chat.friends(app);
 routes.chat.groups(app);
 routes.chat.search(app);
 routes.chat.createGroup(app);
-routes.chat.removeGroup(app);
+routes.chat.outGroup(app);
 /*Profile*/
 routes.profile.info(app);
 routes.profile.edit(app);
@@ -117,14 +117,15 @@ io.on('connection',function(socket){
 	socket.on('join_room',(roomId)=>{
 		if(socket.room){
 			socket.leave(socket.room);
-		}
+			console.log('Leave '+socket.room);
+		}		
 		socket.join('room'+roomId);		
 		socket.room='room'+roomId;
-		console.log(socket.room);
+		console.log('Join '+socket.room);
 	});
 	//Nhắn tin
-	socket.on('send_mess',(msg)=>{
-		io.sockets.in(socket.room).emit('res_mess','<p><strong>'+socket.name+': </strong>'+msg+'</p>');
+	socket.on('mess',(msg)=>{
+		io.sockets.in(socket.room).emit('mess','<p><strong>'+socket.name+': </strong><p>'+msg+'</p></p>');
 	});
 
 });
