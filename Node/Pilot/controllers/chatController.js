@@ -91,5 +91,36 @@ module.exports={
 		}).catch((err)=>{
 			console.log(err);
 		})
+	},
+	/*Thành viên trong group*/
+	members:(req,res)=>{
+		let roomId=req.params['roomId'];
+		let query=`call membersGroup(${roomId});`;
+		models.sequelize.query(query).then((results)=>{
+			console.log(results);
+			res.send(results);
+			res.end();
+		}).catch((err)=>{
+			console.log(err);
+		});
+	},
+	/*Thêm thành viên sau khi đã tạo nhóm*/
+	addMembers:(req,res)=>{
+		let roomId=req.params['roomId'];
+		let arr=req.body['ids'];
+		let values='';
+		for(let i=0;i<arr.length;i++){
+			if(i==arr.length-1){
+				values+=`(${roomId},${arr[i]},now(),now());`;
+			}
+			else values+=`(${roomId},${arr[i]},now(),now()),`;
+		}
+		let query='insert into chatroommembers (chatRoomId,userId,createdAt,updatedAt) values '+values;
+		models.sequelize.query(query).then(([results,metadata])=>{
+			res.status(200).json({response:'Added to group'});
+			res.end();
+		}).catch((err)=>{
+			console.log(err);
+		});
 	}
 }

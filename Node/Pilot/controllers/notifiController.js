@@ -20,6 +20,17 @@ module.exports={
 		res.send(obj);
 		res.end();
 	},
+	/*ID friend của user*/
+	friendId:(req,res)=>{
+		let query=`call listIdFriend(${req.session.userId});`;
+		models.sequelize.query(query).then((results)=>{
+			console.log(results);
+			res.send(results);
+			res.end();
+		}).catch((err)=>{
+			console.log(err);
+		});
+	},
 	/*Thêm bạn bè*/
 	addFriend:(req,res)=>{
 		let sender=req.body['sender'];

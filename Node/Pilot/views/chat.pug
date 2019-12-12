@@ -32,6 +32,8 @@ block layout-content
 				div.MessInput
 					textarea#EnterMess(rows="3",type="text",name="EnterMess")
 					button.Buttons#SendMess Send
+			div.ChatRoomTool
+				div.ChatRoomMember
 		div#DiaGroup
 			div.DiaHead
 				input#GroupName(type="text",name="GroupName",placeholder="Đặt tên nhóm")
@@ -43,6 +45,7 @@ block layout-content
 				div.DiaMidRight
 					h3 Thành viên đã chọn
 					div.Members
+						.MembersToAdd
 			div.DiaFoot
 				button.Buttons#CreateGroup Tạo nhóm
 				button.Buttons.Cancel Hủy
@@ -57,6 +60,8 @@ block layout-content
 				div.DiaMidRight
 					h3 Thành viên đã chọn
 					div.Members
+						.MembersInGroup
+						.MembersToAdd
 			div.DiaFoot
 				button.Buttons#AddToGroup Thêm vào nhóm
 				button.Buttons.Cancel Hủy

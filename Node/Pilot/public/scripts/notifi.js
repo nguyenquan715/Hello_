@@ -1,3 +1,5 @@
+/*List id friend*/
+listIdFriend=[];
 $(document).ready(function(){
 	var socket=io();
 	socket.emit('nickname',$('#Nickname').text());
@@ -8,6 +10,17 @@ $(document).ready(function(){
 		dataType:'json'
 	}).done(function(res){		
 		socket.emit('private_room',res['id']);
+	});
+	/*List id friend*/
+	$.ajax({
+		method:'GET',
+		url:'/api/notifi/friendid',
+		dataType:'json'
+	}).done((res)=>{
+		for(let i=0;i<res.length;i++){
+			listIdFriend.push(res[i]['userId2']);
+		}
+		console.log(listIdFriend);
 	});
 	/*Click nút thêm bạn bè*/
 	$(document).on('click','.AddFriend',function(){
@@ -51,20 +64,22 @@ $(document).ready(function(){
 	$('button#search').on('click',function(){
 		let keyWord=$('input#searchInput').val();
 		$('.Results').html('');
-		$.ajax({
-			method:"GET",
-			url:"/api/notifi/search/"+keyWord,
-			dataType:'json'
-		}).done(function(res){
-			for(let i=0;i<res.length;i++){
-				let result=$('<div class="Result"></div>').data('userId',res[i]["userId"]);
-				result.append('<div class="Account"><div class="Avatar"></div><h3>'+res[i]["fullName"]+'</h3></div>');
-				result.append('<div class="Action"><button class="Buttons AddFriend">Add friend</button><button class="Buttons Info">Info</button></div>');
-				$('.Results').append(result);
+		if(keyWord==""){
+			listUser();
+		}else{
+			searchUser(keyWord);
+		}
+	});
+	$('#searchInput').on('keypress',function(event){
+		if(event.keyCode=='13'){
+			let keyWord=$(this).val();
+			$('.Results').html('');
+			if(keyWord==""){
+				listUser();
+			}else{
+				searchUser(keyWord);
 			}
-		}).fail(function(err){
-			console.log(err);
-		});
+		}
 	});
 	/*Xem info user*/
 	$(document).on('click','button.Info',function(){
@@ -86,3 +101,39 @@ $(document).ready(function(){
 		});
 	});
 },false);
+/*Trả về kết quả*/
+function userResult(res){
+	for(let i=0;i<res.length;i++){
+		let result=$('<div class="Result"></div>').data('userId',res[i]["userId"]);
+		result.append('<div class="Account"><div class="Avatar"></div><h3>'+res[i]["fullName"]+'</h3></div>');
+		if(listIdFriend.includes(res[i]['userId'])){
+			result.append('<div class="Action"><button class="Buttons Unfriend">Unfriend</button><button class="Buttons Info">Info</button></div>');
+		}
+		else result.append('<div class="Action"><button class="Buttons AddFriend">Add friend</button><button class="Buttons Info">Info</button></div>');
+		$('.Results').append(result);
+	}
+}
+/*Danh sách user*/
+function listUser(){
+	$.ajax({
+		method:"GET",
+		url:"/api/admin/list",
+		dataType:'json'
+	}).done(function(res){
+		userResult(res);
+	}).fail(function(err){
+		console.log(err);
+	});
+}
+/*Tìm kiếm user*/
+function searchUser(keyWord){
+	$.ajax({
+		method:"GET",
+		url:"/api/notifi/search/"+keyWord,
+		dataType:'json'
+	}).done(function(res){
+		userResult(res);
+	}).fail(function(err){
+		console.log(err);
+	});
+}

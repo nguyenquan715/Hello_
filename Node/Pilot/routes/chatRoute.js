@@ -20,6 +20,14 @@ module.exports={
 	/*Rời khỏi nhóm*/
 	outGroup:(app)=>{
 		app.delete('/api/chat/outgroup/:roomId',chat.outGroup);
+	},
+	/*Thành viên trong nhóm*/
+	members:(app)=>{
+		app.get('/api/chat/members/:roomId',chat.members);
+	},
+	/*Thêm thành viên sau khi đã tạo nhóm*/
+	addMembers:(app)=>{
+		app.put('/api/chat/editgroup/:roomId',chat.addMembers);
 	}
 
 }

@@ -46,48 +46,48 @@ $(document).ready(function(){
 	 * Thêm group mới
 	 */
 	/*Tìm thành viên cho group*/
-	$(document).on('blur','#FindMember',function(){
-		let keyWord=$('#FindMember').val();
-		let ids=[];
-		$('.Members .Member').each(function(index,item){
-			ids.push($(this).data('userId'));			
-		});
-		let obj={
-			ids:ids
-		};
-		$.ajax({
-			method:"POST",
-			url:"/api/chat/search/"+keyWord,
-			dataType:"json",
-			contentType:'application/json;charset=utf-8',
-			data:JSON.stringify(obj)
-		}).done(function(res){
-			$('.LeftBottom').html('');
-			for(let i=0;i<res.length;i++){
-				let result=$('<div class="Member"></div>').data('userId',res[i]["userId"]);
-				result.append('<div class="MemAvatar"></div><h3>'+res[i]["fullName"]+'</h3></div>');
-				$('.LeftBottom').append(result);
-			}
-		}).fail((err)=>{
-			console.log(err);
-		});
+	$(document).on('keypress','#DiaGroup #FindMember',function(event){
+		if(event.keyCode=='13'){
+			let keyWord=$(this).val();
+			let ids=[];
+			$('#DiaGroup .Members .Member').each(function(index,item){
+				ids.push($(this).data('userId'));			
+			});
+			let obj={
+				ids:ids
+			};
+			FindMember('#DiaGroup',keyWord,obj);
+		}
+	});
+	$(document).on('keypress','#DiaAddToGroup #FindToAdd',function(event){
+		if(event.keyCode=='13'){
+			let keyWord=$(this).val();
+			let ids=[];
+			$('#DiaAddToGroup .Members .Member').each(function(index,item){
+				ids.push($(this).data('userId'));			
+			});
+			let obj={
+				ids:ids
+			};
+			FindMember('#DiaAddToGroup',keyWord,obj);
+		}
 	});
 	/*Thêm thành viên cho Group*/
 	$(document).on('click','.LeftBottom .Member',function(){
 		let result=$('<div class="Member"></div>').data('userId',$(this).data('userId'));
 		result.append($(this).html());
-		$('.DiaMidRight .Members').append(result);
+		$('.DiaMidRight .Members .MembersToAdd').append(result);
 		$(this).remove();
 	});
 	/*Xóa thành viên khỏi group*/
-	$(document).on('click','.Members .Member',function(){
+	$(document).on('click','.Members .MembersToAdd .Member',function(){
 		$(this).remove();
 	});
 	/*Tạo nhóm*/
-	$(document).on('click','#CreateGroup',function(){
-		let name=$('#GroupName').val();
+	$(document).on('click','#DiaGroup #CreateGroup',function(){
+		let name=$('#DiaGroup #GroupName').val();
 		let ids=[];
-		$('.Members .Member').each(function(index,item){
+		$('#DiaGroup .Members .MembersToAdd .Member').each(function(index,item){
 			ids.push($(this).data('userId'));			
 		});
 		let group={
@@ -104,8 +104,8 @@ $(document).ready(function(){
 			/*Reset dialog*/
 			$('#DiaGroup').dialog('close');
 			$('#DiaGroup input').val('');
-			$('.Members').html('');
-			$('.LeftBottom').html('');
+			$('#DiaGroup .Members .MembersToAdd').html('');
+			$('#DiaGroup .LeftBottom').html('');
 			/*Phát ra sự kiện load lại group đối với các thành viên trong group*/
 			socket.emit("reload_group",JSON.stringify(ids));
 		}).fail((err)=>{
@@ -128,6 +128,63 @@ $(document).ready(function(){
 			}
 		});
 	});
+	/**
+	 * Thêm thành viên cho nhóm sau khi đã tạo nhóm
+	 */
+	$(document).on('click','.GroupPlus',function(){
+		let roomId=$(this).parent().parent().data('roomId');
+		$('#DiaAddToGroup').data('roomId',roomId);
+		let nameOfGroup=$(this).parent().parent().find('p').text();
+		$('#DiaAddToGroup #NameOfGroup').val(nameOfGroup);
+		$.ajax({
+			method:'GET',
+			url:'/api/chat/members/'+roomId,
+			dataType:'json'
+		}).done((res)=>{
+			$('#DiaAddToGroup .Members .MembersInGroup').empty();
+			for(let i=0;i<res.length;i++){
+				let result=$('<div class="Member"></div>').data('userId',res[i]["userId"]);
+				result.append('<div class="MemAvatar"></div><h3>'+res[i]["fullName"]+'</h3></div>');
+				$('#DiaAddToGroup .Members .MembersInGroup').append(result);
+			}
+		}).fail((err)=>{
+			console.log(err);
+		});
+	});
+	$(document).on('click','#DiaAddToGroup #AddToGroup',function(){
+		let roomId=$('#DiaAddToGroup').data('roomId');
+		let ids=[];
+		$('#DiaAddToGroup .Members .MembersToAdd .Member').each(function(index,item){
+			ids.push($(this).data('userId'));			
+		});
+		if(ids.length==0){
+			$('#DiaAddToGroup').dialog('close');
+			$('#DiaAddToGroup input').val('');
+			$('#DiaAddToGroup .Members .MembersToAdd').html('');
+			$('#DiaAddToGroup .LeftBottom').html('');
+			return;
+		}
+		let obj={
+			ids:ids
+		}
+		$.ajax({
+			method:"PUT",
+			url:'/api/chat/editgroup/'+roomId,
+			contentType:'application/json;charset=utf-8',
+			data:JSON.stringify(obj)
+		}).done(()=>{
+			console.log('Add to group success!');
+			/*Reset dialog*/
+			$('#DiaAddToGroup').dialog('close');
+			$('#DiaAddToGroup input').val('');
+			$('#DiaAddToGroup .Members .MembersToAdd').html('');
+			$('#DiaAddToGroup .LeftBottom').html('');
+			/*Phát ra sự kiện load lại group đối với các thành viên mới được thêm trong group*/
+			socket.emit("reload_group",JSON.stringify(ids));
+		}).fail((err)=>{
+			console.log(err);
+		});
+	});
 
 	/*Rời khỏi nhóm*/
 	$(document).on('click','#DiaOutGroup #Yes_OutGroup',function(){
@@ -144,8 +201,29 @@ $(document).ready(function(){
 		})
 	});
 
+	/**
+	 * Liệt kê thành viên của group
+	 */
+	$(document).on('click','#GroupList .Room',function(){
+		let roomId=$(this).data('roomId');
+		$.ajax({
+			method:'GET',
+			url:'/api/chat/members/'+roomId,
+			dataType:'json'
+		}).done((res)=>{
+			$('.ChatRoomTool .ChatRoomMember').empty();
+			for(let i=0;i<res.length;i++){
+				let member=$('<div class="Room"></div>').data('userId',res[i]['userId']);
+				member.append('<div class="Avatar"></div><p>'+res[i]['fullName']+'</p>');
+				$('.ChatRoomTool .ChatRoomMember').append(member);
+			}
+		}).fail((err)=>{
+			console.log(err);
+		});
+	});
+
 	/*Sự kiện khi nhấn vào một Room*/
-	$(document).on('click','.Room',function(){
+	$(document).on('click','.List .Room',function(){
 		$('.ChatRoomName').text($(this).find('p').text());
 		socket.emit('join_room',$(this).data('roomId'));
 	});
@@ -157,11 +235,11 @@ $(document).ready(function(){
 			socket.emit('mess',content);
 			$(this).val('');
 			//Trở về dòng đầu tiên
-			setCaretToPos(document.getElementById('#EnterMess'),1);
+			
 		}
 		if(event.altKey&&event.keyCode=='13'){
 			//Xuống dòng tiếp theo
-			setCaretToPos(document.getElementById('#EnterMess'),3);
+			
 		}
 	});
 	$('#SendMess').on('click',function(){
@@ -173,20 +251,21 @@ $(document).ready(function(){
 		$('.Messages').append(content);
 	});
 },false);
-function setSelectionRange(input, selectionStart, selectionEnd) {
-	if (input.setSelectionRange) {
-	  input.focus();
-	  input.setSelectionRange(selectionStart, selectionEnd);
-	}
-	else if (input.createTextRange) {
-	  var range = input.createTextRange();
-	  range.collapse(true);
-	  range.moveEnd('character', selectionEnd);
-	  range.moveStart('character', selectionStart);
-	  range.select();
-	}
-  }
-  
-function setCaretToPos (input, pos) {
-	setSelectionRange(input, pos, pos);
+function FindMember(dialog,keyWord,obj){
+	$.ajax({
+		method:"POST",
+		url:"/api/chat/search/"+keyWord,
+		dataType:"json",
+		contentType:'application/json;charset=utf-8',
+		data:JSON.stringify(obj)
+	}).done(function(res){
+		$(dialog+' .LeftBottom').html('');
+		for(let i=0;i<res.length;i++){
+			let result=$('<div class="Member"></div>').data('userId',res[i]["userId"]);
+			result.append('<div class="MemAvatar"></div><h3>'+res[i]["fullName"]+'</h3></div>');
+			$(dialog+' .LeftBottom').append(result);
+		}
+	}).fail((err)=>{
+		console.log(err);
+	});
 }

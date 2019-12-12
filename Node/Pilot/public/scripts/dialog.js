@@ -2,24 +2,30 @@ $(document).ready(function(){
 	/*Dialog thêm nhóm*/
 	$(document).on('click','.AddGroup',function(){
 		$('#DiaGroup').dialog('open');
+		$('#DiaGroup input').val('');
+		$('#DiaGroup .Members .MembersToAdd').html('');
+		$('#DiaGroup .LeftBottom').html('');
 	});
 	/*Hủy tạo nhóm*/
 	$(document).on('click','#DiaGroup .Cancel',function(){
 		$('#DiaGroup').dialog('close');
 		$('#DiaGroup input').val('');
-		$('#DiaGroup .Members').html('');
+		$('#DiaGroup .Members .MembersToAdd').html('');
 		$('#DiaGroup .LeftBottom').html('');
 	});
 
 	/*Dialog thêm thành viên*/
 	$(document).on('click','.GroupPlus',function(){
 		$('#DiaAddToGroup').dialog('open');
+		$('#DiaAddToGroup .Members .MembersToAdd').html('');
+		$('#DiaAddToGroup .LeftBottom').html('');
 	});
 	/*Hủy thêm vào nhóm*/
 	$(document).on('click','#DiaAddToGroup .Cancel',function(){
 		$('#DiaAddToGroup').dialog('close');
 		$('#DiaAddToGroup input').val('');
-		$('#DiaAddToGroup .Members').html('');
+		$('#DiaAddToGroup .Members .MembersToAdd').html('');
+		$('#DiaAddToGroup .Members .MembersInGroup').html('');
 		$('#DiaAddToGroup .LeftBottom').html('');
 	});
 

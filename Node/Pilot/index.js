@@ -54,6 +54,7 @@ routes.user.signout(app);
 /*Notifi*/
 routes.notifi.search(app);
 routes.notifi.id(app);
+routes.notifi.friendId(app);
 routes.notifi.addFriend(app);
 routes.notifi.info(app);
 /*Chat*/
@@ -62,6 +63,8 @@ routes.chat.groups(app);
 routes.chat.search(app);
 routes.chat.createGroup(app);
 routes.chat.outGroup(app);
+routes.chat.members(app);
+routes.chat.addMembers(app);
 /*Profile*/
 routes.profile.info(app);
 routes.profile.edit(app);

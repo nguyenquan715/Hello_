@@ -157,26 +157,27 @@ body{
 				padding:5px;
 				margin:5px;
 			}
-			.List .Room{
+			.Room{
 				display: flex;
 				align-items: center;
 				padding:10px;
 				border-bottom:1px solid gray;
 			}
-			.List .Room:hover p{
+			.Room:hover p{
 				font-weight: bold;
 				color:tomato;
 				cursor: pointer;
 			}
-			.List .Room p{
+			.Room p{
 				border:0!important;
 			}
-			.List .Room .Avatar{
+			.Room .Avatar{
 				width:30px;
 				height:30px;
 				background-image: url('/contents/imgs/avatar.png');
 				background-repeat: no-repeat;
-	    		background-size: 30px;
+				background-size: 30px;
+				margin-right:5px;
 			}
 			.List .Rooms .Room{
 				justify-content: space-between;
@@ -252,6 +253,7 @@ body{
 			color:white;
 			font-size:25px;
 			margin-right:10px;
+			outline:none;
 		}
 		.Buttons{
 			border:1px solid #f55c5c;
@@ -263,6 +265,7 @@ body{
 			transition:0.5s;
 			cursor: pointer;
 			margin-right:10px;
+			outline: none;
 		}
 		.Buttons:hover{
 			color:black;
@@ -322,17 +325,18 @@ body{
 					font-size: 25px;
 					padding:10px;
 				}
+	/*Chat*/
 	.ChatRoom{
 		position: absolute;
-		top:10px;
-		bottom:10px;
+		top:0;
+		bottom:0;
 		left:10px;
-		right:10px;
+		right:260px;
 		display: flex;
 		flex-direction: column;
 	}
 	.ChatRoomName{
-		flex-grow: 1;
+		height:70px;
 		color:white;
 		font-size:25px;
 		display: flex;
@@ -345,14 +349,15 @@ body{
 		flex-grow: 18;
 		overflow: auto;
 		border:1px solid tomato;
+		background-color:white;
 	}
 		.Messages p{
-			color:white;
+			color:black;
 			font-size:20px;
 			margin:5px;
 		}
 		.Messages strong{
-			color:white;
+			color:black;
 			font-size:20px;
 			margin:5px;
 		}
@@ -364,14 +369,38 @@ body{
 	}
 	.MessInput textarea{
 		font-size: 20px;
-		color:white;
-		background-color:transparent;
-		border:1px solid white;
-		border-radius: 10px;
-		margin-right:10px;
-		width:80%;
+		color:black;
+		background-color:white;
+		border:1px solid tomato;
+		border-top-left-radius: 10px;
+		border-bottom-left-radius: 10px;
+		border-right:0;
+		width:90%;
+		resize: none;
 		padding:5px;
 	}
+	.MessInput textarea:focus{
+		outline:none;
+	}
+	.MessInput button#SendMess{
+		border-radius: 0;
+		border-top-right-radius:10px;
+		border-bottom-right-radius: 10px;
+		height:80px;
+		margin-right:0;
+	}
+.ChatRoomTool{
+	position: absolute;
+	top:0;
+	bottom: 0;
+	right:0;
+	width:250px;
+	border:1px solid tomato;
+	background-color:white;
+}
+.ChatRoomTool .ChatRoomMember{
+
+}
 
 .Hide{
 	display: none;

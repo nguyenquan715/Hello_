@@ -68,6 +68,13 @@ create procedure listFriend(id int(11))
 	end$$
 DELIMITER;
 
+/*Danh sách Id bạn bè*/
+DELIMITER $$
+create procedure listIdFriend(id int(11))
+	begin 
+		select userId2 from friends where userId1=id;
+	end$$
+
 /*Danh sách group chat*/
 DROP procedure listGroup;
 
@@ -82,6 +89,16 @@ create procedure listGroup(id int(11))
 	end$$
 DELIMITER;
 
+/*Danh sách thành viên của Group*/
+DELIMITER $$
+create procedure membersGroup(chatRoomId int(11))
+	begin
+		select u.userId,concat(u.lastName,' ',u.firstName) fullName
+		from users u
+		inner join chatroommembers cm on cm.userId=u.userId
+		where cm.chatRoomId=chatRoomId;
+	end$$
+		
 
 
 

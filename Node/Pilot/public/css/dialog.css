@@ -79,7 +79,8 @@
 			padding:5px;
 		}
 		.DiaMidRight .Members{
-
+			position: relative;
+			height:91%;
 		}
 		.Members .Member{
 			padding:5px;
@@ -90,6 +91,24 @@
 			background-color:#ddf7f7;
 			cursor:pointer;
 		}
+			#DiaAddToGroup .Members .MembersInGroup{
+				position: absolute;
+				top:0;
+				left:0;
+				right:0;
+				bottom:150px;
+				border-top:1px solid black;
+				border-bottom:1px solid black;
+				overflow: auto;
+			}
+			#DiaAddToGroup .Members .MembersToAdd{
+				position: absolute;
+				height:150px;
+				left:0;
+				right:0;
+				bottom:0;
+				overflow: auto;
+			}
 .DiaFoot{
 	position: absolute;
 	left:0;
