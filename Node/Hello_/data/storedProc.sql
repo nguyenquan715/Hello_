@@ -64,10 +64,37 @@ create procedure listFriend(id int(11))
 		from chatrooms c
 		inner join chatroommembers cm on cm.chatRoomId=c.chatRoomId
 		inner join users u on u.userId=cm.userId 
-		where c.chatRoomId in (select chatRoomId from chatroommembers where userId=id) and u.userId!=id and c.chatRoomType=true;
+		where u.userId in (select userId2 from friends where userId1=id) and c.chatRoomId in (select chatRoomId from chatroommembers where userId=id) and c.chatRoomType=true;
 	end$$
-DELIMITER;
 
+/*Hủy kết bạn*/
+DROP procedure unfriend;
+
+DELIMITER $$
+create procedure unfriend(id1 int(11),id2 int(11))
+	begin
+		-- declare id int(11) default 0;
+		-- select cm.chatRoomId into id
+		-- from chatroommembers cm
+		-- inner join chatrooms c on c.chatRoomId=cm.chatRoomId
+		-- where cm.userId=id1 and cm.chatRoomId in (select chatRoomId from chatroommembers where userId=id2) and c.chatRoomType=true
+		-- limit 1;
+		-- delete from chatroommembers where chatRoomId=id;
+		-- delete from chatrooms where chatRoomId=id;
+		delete from friends where (userId1=id1 and userId2=id2) or (userId2=id1 and userId1=id2);
+	end$$
+
+/*Đã tồn tại room đó hay chưa*/
+DROP procedure roomExisted;
+
+DELIMITER $$
+create procedure roomExisted(id1 int(11),id2 int(11))
+	begin 
+		select cm.chatRoomId
+		from chatroommembers cm
+		inner join chatrooms c on c.chatRoomId=cm.chatRoomId
+		where cm.userId=id1 and cm.chatRoomId in (select chatRoomId from chatroommembers where userId=id2) and c.chatRoomType=true;
+	end$$
 /*Danh sách Id bạn bè*/
 DELIMITER $$
 create procedure listIdFriend(id int(11))

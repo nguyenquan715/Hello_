@@ -1,7 +1,9 @@
 extends layout
 
 block layout-style
+	link(rel="stylesheet",href="css/libs/jquery-ui.min.css")
 	link(rel="stylesheet" href="css/style2.css")
+	link(rel="stylesheet" href="css/dialog.css")
 block layout-content
 	div.View
 		div.NavBar
@@ -36,6 +38,15 @@ block layout-content
 						tr
 							th Giới tính
 							td#genderInfo
+		div#DiaUnfriend
+			div.Question
+				.QuestionImg
+				.QuestionContent
+			div.DiaFoot
+				button.Buttons#Yes_Unfriend Có
+				button.Buttons#No_Unfriend Không
 block layout-script
 	script(src="scripts/libs/socket.io.js")
+	script(src="scripts/libs/jquery-ui.min.js")
 	script(src="scripts/notifi.js")
+	script(src="scripts/dialog.js")

@@ -56,6 +56,7 @@ routes.notifi.search(app);
 routes.notifi.id(app);
 routes.notifi.friendId(app);
 routes.notifi.addFriend(app);
+routes.notifi.unfriend(app);
 routes.notifi.info(app);
 /*Chat*/
 routes.chat.friends(app);
@@ -77,7 +78,6 @@ routes.admin.unlock(app);
 var server=app.listen(port,()=>{
 	console.log("Listening at http://localhost:"+port);
 });
-
 /*Socket.io*/
 const io=require('socket.io')(server);
 io.on('connection',function(socket){
@@ -86,51 +86,51 @@ io.on('connection',function(socket){
 	socket.on('nickname',(name)=>{
 		socket.name=name;
 	});
+	/*Join vào một chatroom*/
+	socket.on('joinChatRoom',(roomId)=>{
+		if(socket.chatRoom){
+			socket.leave(socket.chatRoom);
+		}
+		socket.join('room'+roomId);
+		socket.chatRoom='room'+roomId;
+		console.log('Join '+socket.chatRoom);
+	});
+	/*Message*/
+	socket.on('message',(mess)=>{
+		io.sockets.in(socket.chatRoom).emit('message',`<p><strong>${socket.name}:</strong></p><p>${mess}</p>`);
+	});
 	//Người dùng sẽ join vào một phòng chỉ của duy nhất họ
-	socket.on('private_room',(id)=>{
+	socket.on('privateRoom',(id)=>{
 		socket.join('user'+id)
 		console.log('Join user'+id);
-		socket.id=id;
+		socket.userId=id;
 	});
 	//Gửi lời mời kết bạn
 	socket.on('make_friend',(id)=>{
 		var obj={};
-		obj.senderId=socket.id;
+		obj.senderId=socket.userId;
 		obj.receiverId=id;
 		obj.name=socket.name;
 		io.sockets.in('user'+id).emit('make_friend',obj);
 	});
+	/*Sau khi được chấp nhận lời mời kết bạn thì sender phải load lại friend*/
+	socket.on('reload_friend',(senderId)=>{
+		io.sockets.in('user'+senderId).emit('reload_friend',socket.name);
+	})
 	/*Sau khi một group mới được tạo*/
 	socket.on('reload_group',(data)=>{
 		if(data==''){
-			io.sockets.in('user'+socket.id).emit('reload_group','');
-			console.log('To user'+socket.id);
+			io.sockets.in('user'+socket.userId).emit('reload_group','');
+			console.log('To user'+socket.userId);
 		}
 		else{
 			let arrId=JSON.parse(data);
 			console.log(arrId);
-			io.sockets.in('user'+socket.id).emit('reload_group','');
+			io.sockets.in('user'+socket.userId).emit('reload_group','');
 			for(let i=0;i<arrId.length;i++){
 				io.sockets.in('user'+arrId[i]).emit('reload_group','');
 			}
 		}		
 	});
-	
-	//Join vào phòng chat bất kì
-	socket.on('join_room',(roomId)=>{
-		if(socket.room){
-			socket.leave(socket.room);
-			console.log('Leave '+socket.room);
-		}		
-		socket.join('room'+roomId);		
-		socket.room='room'+roomId;
-		console.log('Join '+socket.room);
-	});
-	//Nhắn tin
-	socket.on('mess',(msg)=>{
-		io.sockets.in(socket.room).emit('mess','<p><strong>'+socket.name+': </strong><p>'+msg+'</p></p>');
-	});
-
 });
-
 

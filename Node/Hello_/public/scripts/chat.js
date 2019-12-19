@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	var socket=io();
+	socket=io();
 	socket.emit('nickname',$('#Nickname').text());
 	/*Join vào một room riêng*/
 	$.ajax({
@@ -7,7 +7,7 @@ $(document).ready(function(){
 		url:"/api/notifi/id",
 		dataType:'json'
 	}).done(function(res){		
-		socket.emit('private_room',res['id']);
+		socket.emit('privateRoom',res['id']);
 	});
 	/*Hiển thị danh sách Friend*/
 	$.ajax({
@@ -20,6 +20,21 @@ $(document).ready(function(){
 			room.append('<div class="Avatar"></div><p>'+res[i]["fullName"]+'</p>');
 			$('#FriendList').append(room);
 		}
+	});
+	/*Sau khi được đồng ý lời mời kết bạn*/
+	socket.on('reload_friend',()=>{
+		$.ajax({
+			method:"GET",
+			url:"/api/chat/friends",
+			dataType:'json'
+		}).done(function(res){
+			$('#FriendList').empty();
+			for(let i=0;i<res.length;i++){
+				let room=$('<div class="Room"></div>').data('roomId',res[i]["chatRoomId"]);
+				room.append('<div class="Avatar"></div><p>'+res[i]["fullName"]+'</p>');
+				$('#FriendList').append(room);
+			}
+		});	
 	});
 	/*Hiển thị danh sách Group*/
 	$.ajax({
@@ -225,30 +240,36 @@ $(document).ready(function(){
 	/*Sự kiện khi nhấn vào một Room*/
 	$(document).on('click','.List .Room',function(){
 		$('.ChatRoomName').text($(this).find('p').text());
-		socket.emit('join_room',$(this).data('roomId'));
+		socket.emit('joinChatRoom',$(this).data('roomId'));
+		$('.Messages').empty();
+	});
+	$(document).on('click','#FriendList .Room',function(){
+		$('.ChatRoomMember').empty();
 	});
 
 	/*Nhắn tin*/
-	$('#EnterMess').on('keydown',function(event){
-		if(event.keyCode=='13'&&!event.altKey){
-			let content=$(this).val();
-			socket.emit('mess',content);
-			$(this).val('');
-			//Trở về dòng đầu tiên
-			
-		}
-		if(event.altKey&&event.keyCode=='13'){
-			//Xuống dòng tiếp theo
-			
+	$(document).on('keypress','#EnterMess',function(event){
+		if(event.keyCode=='13'){
+			let mess=$(this).val();
+			if(mess){
+				$(this).val('');
+				socket.emit('message',mess);
+				let blockMess=$('.Messages')[0];
+				blockMess.scrollTop=blockMess.scrollHeight;
+			}
 		}
 	});
-	$('#SendMess').on('click',function(){
-		let content=$('#EnterMess').val();
-		socket.emit('mess',content);
-		$('#EnterMess').val('');
+	$(document).on('click','#SendMess',function(){
+		let mess=$('#EnterMess').val();
+		if(mess){
+			$('#EnterMess').val('');
+			socket.emit('message',mess);
+			let blockMess=$('.Messages')[0];
+			blockMess.scrollTop=blockMess.scrollHeight;
+		}
 	});
-	socket.on('mess',(content)=>{
-		$('.Messages').append(content);
+	socket.on('message',(mess)=>{
+		$('.ChatRoom .Messages').append('<p>'+mess+'</p>');
 	});
 },false);
 function FindMember(dialog,keyWord,obj){

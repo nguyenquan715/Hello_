@@ -17,6 +17,7 @@ module.exports={
 		let id=req.session.userId;
 		let firstName=req.body.firstName;
 		let lastName=req.body.lastName;
+		req.session.nickname=lastName+' '+firstName;
 		let year=Number(req.body.yearOfBirth);
 		let month=Number(req.body.monthOfBirth);
 		let day=Number(req.body.dayOfBirth);

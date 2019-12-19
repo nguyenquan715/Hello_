@@ -38,24 +38,55 @@ module.exports={
 		let name=req.body['name'];
 		let chatRoomName=`${name}-${req.session.nickname}`;
 		console.log(sender+' '+receiver+' '+chatRoomName);
+		/*insert vào bảng friend*/
 		let query1=`call insertFriend(${sender},${receiver});`;
-		models.sequelize.query(query1).then((result)=>{
-			console.log(result);
-		}).catch((err)=>{
-			console.log(err);
-		});
-		let query2=`insert into chatrooms (chatRoomName,createdAt,updatedAt) values ('${chatRoomName}',now(),now());`;
-		models.sequelize.query(query2).then(([results,metadata])=>{
-			console.log(results);
-			let query3=`call insertChatmember(${results},${sender},${receiver});`;
-			models.sequelize.query(query3).catch((err)=>{
+		models.sequelize.query(query1).then((results)=>{
+			/*kiểm tra xem chatroom đó đã tồn tại hay chưa*/
+			let query=`call roomExisted(${sender},${receiver});`;
+			models.sequelize.query(query).then((results)=>{
+				console.log(results);
+				if(results.length){
+					//Đã tồn tại
+					res.send({response:'Add friend success!'});
+					res.end();
+				}
+				else{
+					let query2=`insert into chatrooms (chatRoomName,createdAt,updatedAt) values ('${chatRoomName}',now(),now());`;
+					models.sequelize.query(query2).then(([results,metadata])=>{
+						console.log(results);
+						let query3=`call insertChatmember(${results},${sender},${receiver});`;
+						models.sequelize.query(query3).then(()=>{
+							res.send({response:'Add friend success!'});
+							res.end();
+						}).catch((err)=>{
+							console.log(err);
+						});
+					}).catch((err)=>{
+						console.log(err);
+					});
+				}
+			}).catch((err)=>{
 				console.log(err);
 			});
 		}).catch((err)=>{
 			console.log(err);
 		});
-		res.end();
 	},
+	/*Hủy kết bạn*/
+	unfriend:(req,res)=>{
+		let friendId=req.params['userId'];
+		let userId=req.session.userId;
+		/*Xóa bản ghi trong bảng friends còn trong chatrooms và chatroommebers thì không
+		vì cần lưu tin nhắn để lỡ sau này kết bạn lại*/
+		let query=`call unfriend(${userId},${friendId});`
+		models.sequelize.query(query).then(()=>{
+			res.send({res:'Unfriend success!'});
+			res.end();
+		}).catch((err)=>{
+			console.log(err);
+		});
+	},
+	/*Info user*/
 	info:(req,res)=>{
 		let id=req.params["id"];
 		let query="select concat(lastName,' ',firstName) fullName,birthday,gender from users where userId="+id+" limit 1;";

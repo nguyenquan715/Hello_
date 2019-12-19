@@ -16,6 +16,10 @@ module.exports={
 	addFriend:(app)=>{
 		app.post('/api/notifi/addfriend',notifi.addFriend);
 	},
+	/*Hủy kết bạn*/
+	unfriend:(app)=>{
+		app.delete('/api/notifi/unfriend/:userId',notifi.unfriend);
+	},
 	/*Thông tin user*/
 	info:(app)=>{
 		app.get('/api/notifi/info/:id',notifi.info);

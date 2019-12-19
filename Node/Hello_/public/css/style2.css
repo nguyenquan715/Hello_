@@ -346,8 +346,13 @@ body{
 		background-color:tomato;
 	}
 	.Messages{
-		flex-grow: 18;
-		overflow: auto;
+		position: absolute;
+		top:70px;
+		bottom:100px;
+		left:0;
+		right:0;
+		overflow-wrap: break-word;
+		overflow-y: auto;
 		border:1px solid tomato;
 		background-color:white;
 	}
@@ -357,12 +362,15 @@ body{
 			margin:5px;
 		}
 		.Messages strong{
-			color:black;
+			color:#f55c5c;
 			font-size:20px;
-			margin:5px;
 		}
 	.MessInput{
-		flex-grow: 1;
+		position: absolute;
+		bottom: 10px;
+		height: 75px;
+		right:0;
+		left:0;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -401,7 +409,17 @@ body{
 .ChatRoomTool .ChatRoomMember{
 
 }
-
+@media only screen and (max-width: 1200px){
+	.ChatRoomTool { display: none;}
+	.ChatRoom {
+		right:10px;
+	}
+}
 .Hide{
 	display: none;
+}
+.Disabled{
+	background-color:gray;
+	border:1px solid gray;
+	cursor:not-allowed;
 }

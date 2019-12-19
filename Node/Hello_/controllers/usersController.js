@@ -1,7 +1,6 @@
 const models=require('../models');
 const validator=require('validator');
 const bcrypt=require('bcrypt');
-
 module.exports={
 	//Hiển thị home page
 	home:(req,res)=>{
@@ -92,7 +91,6 @@ module.exports={
 			res.end();
 		});
 	},
-
 	/*Private Page*/
 	profile:(req,res)=>{
 		if(req.session.login){

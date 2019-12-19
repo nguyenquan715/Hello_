@@ -9,7 +9,7 @@ $(document).ready(function(){
 		url:"/api/notifi/id",
 		dataType:'json'
 	}).done(function(res){		
-		socket.emit('private_room',res['id']);
+		socket.emit('privateRoom',res['id']);
 	});
 	/*List id friend*/
 	$.ajax({
@@ -20,12 +20,13 @@ $(document).ready(function(){
 		for(let i=0;i<res.length;i++){
 			listIdFriend.push(res[i]['userId2']);
 		}
-		console.log(listIdFriend);
 	});
 	/*Click nút thêm bạn bè*/
 	$(document).on('click','.AddFriend',function(){
 		let id=$(this).parent().parent().data('userId');
 		socket.emit('make_friend',id);
+		$(this).attr('disabled','disabled');
+		$(this).addClass('Disabled');
 	});
 	socket.on('make_friend',(res)=>{
 		let notifi=$('<p class="Notifi"></p>').data('senderId',res['senderId']);
@@ -49,11 +50,33 @@ $(document).ready(function(){
 		$.ajax({
 			method:"POST",
 			url:"/api/notifi/addfriend",
-			data:JSON.stringify(obj),
-			contentType:'application/json; charset=utf-8'
+			contentType:'application/json; charset=utf-8',
+			data:JSON.stringify(obj)
+		}).done((res)=>{
+			if(res.response){
+				/*Load lại list id friend*/
+				listIdFriend=[];
+				$.ajax({
+					method:'GET',
+					url:'/api/notifi/friendid',
+					dataType:'json'
+				}).done((res)=>{
+					for(let i=0;i<res.length;i++){
+						listIdFriend.push(res[i]['userId2']);
+					}
+				});
+				socket.emit('reload_friend',senderId);
+			}
 		}).fail((err)=>{
 			console.log(err);
 		});
+	});
+	/*Đã được đồng ý lời mời kết bạn*/
+	socket.on('reload_friend',(name)=>{
+		let notifi=$('<p class="Notifi"></p>');
+		notifi.append('<strong>'+name+'</strong><span> đã chấp nhận lời mời kết bạn của bạn.</span>');
+		$('.List').append(notifi);
+		reloadFriend();
 	});
 	/*Từ chối lời mời kết bạn*/
 	$(document).on('click','.Deny',function(){
@@ -81,12 +104,27 @@ $(document).ready(function(){
 			}
 		}
 	});
+	/*Hủy kết bạn*/
+	$(document).on('click','#DiaUnfriend #Yes_Unfriend',function(){
+		let userId=$('#DiaUnfriend').data('userId');
+		$.ajax({
+			method:'DELETE',
+			url:'/api/notifi/unfriend/'+userId,
+		}).done(()=>{
+			$('#DiaUnfriend').dialog('close');
+			/*Load lại list id friend*/
+			reloadFriend();
+		}).fail((err)=>{
+			console.log(err);
+		});
+	});
+
 	/*Xem info user*/
 	$(document).on('click','button.Info',function(){
 		let id=$(this).parent().parent().data('userId');
 		$.ajax({
 			method:"GET",
-			url:"api/notifi/info/"+id,
+			url:"/api/notifi/info/"+id,
 			dataType:'json'
 		}).done(function(res){
 			$('#nameInfo').text(res["fullName"]);
@@ -101,7 +139,7 @@ $(document).ready(function(){
 		});
 	});
 },false);
-/*Trả về kết quả*/
+/*Trả về kết quả sau khi tìm kiếm*/
 function userResult(res){
 	for(let i=0;i<res.length;i++){
 		let result=$('<div class="Result"></div>').data('userId',res[i]["userId"]);
@@ -135,5 +173,27 @@ function searchUser(keyWord){
 		userResult(res);
 	}).fail(function(err){
 		console.log(err);
+	});
+}
+/*Load lại listIdFriend sau khi unfriend và add friend*/
+function reloadFriend(){
+	/*Load lại list id friend*/
+	listIdFriend=[];
+	$.ajax({
+		method:'GET',
+		url:'/api/notifi/friendid',
+		dataType:'json'
+	}).done((res)=>{
+		for(let i=0;i<res.length;i++){
+			listIdFriend.push(res[i]['userId2']);
+		}
+		/*Load lại kết quả tìm kiếm */
+		let keyWord=$('input#searchInput').val();
+		$('.Results').html('');
+		if(keyWord==""){
+			listUser();
+		}else{
+			searchUser(keyWord);
+		}
 	});
 }
