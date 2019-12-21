@@ -25,7 +25,7 @@ module.exports=(sequelize,Sequelize)=>{
 			defaultValue:Sequelize.NOW
 		}
 	});
-	// Friend.sync({force:true}).then(()=>{
+	// Friend.sync({alter:true}).then(()=>{
 	// 	console.log('success!');
 	// }).catch((err)=>{
 	// 	console.log(err);

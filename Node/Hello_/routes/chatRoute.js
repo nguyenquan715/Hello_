@@ -28,6 +28,13 @@ module.exports={
 	/*Thêm thành viên sau khi đã tạo nhóm*/
 	addMembers:(app)=>{
 		app.put('/api/chat/editgroup/:roomId',chat.addMembers);
+	},
+	/*Tin nhắn*/
+	message:(app)=>{
+		app.post('/api/chat/message',chat.message);
+	},
+	/*Load messages*/
+	loadMess:(app)=>{
+		app.get('/api/chat/message/:roomId',chat.loadMess);
 	}
-
 }

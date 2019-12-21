@@ -23,5 +23,9 @@ module.exports={
 	/*Thông tin user*/
 	info:(app)=>{
 		app.get('/api/notifi/info/:id',notifi.info);
+	},
+	/*Load notification*/
+	loadNotifi:(app)=>{
+		app.get('/api/notifi/notification',notifi.loadNotifi);
 	}
 }

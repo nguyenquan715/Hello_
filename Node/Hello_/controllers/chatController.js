@@ -122,5 +122,29 @@ module.exports={
 		}).catch((err)=>{
 			console.log(err);
 		});
+	},
+	/*Tin nhắn*/
+	message:(req,res)=>{
+		let content=req.body["mess"];
+		let toChatRoom=req.body["roomId"];
+		let fromUser=req.session.userId;
+		let query=`call newMessage('${content}',${fromUser},${toChatRoom});`;
+		models.sequelize.query(query).then(()=>{
+			res.send({response:"Send message success!"});
+			res.end();
+		}).catch((err)=>{
+			console.log(err);
+		})
+	},
+	/*Load messages*/
+	loadMess:(req,res)=>{
+		let roomId=req.params["roomId"];
+		let query=`call loadMessage(${roomId});`;
+		models.sequelize.query(query).then((results)=>{
+			res.send(results);
+			res.end();
+		}).catch((err)=>{
+			console.log(err);
+		})
 	}
 }

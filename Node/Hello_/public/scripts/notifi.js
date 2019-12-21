@@ -21,12 +21,40 @@ $(document).ready(function(){
 			listIdFriend.push(res[i]['userId2']);
 		}
 	});
+	/*Load notification*/
+	// $.ajax({
+	// 	method:'GET',
+	// 	url:'/api/notifi/notification',
+	// 	data:'json'
+	// }).done((res)=>{
+	// 	for(let i=res.length-1;i--;i>=0){
+			
+	// 	}
+	// }).fail((err)=>{
+	// 	console.log(err);
+	// });
 	/*Click nút thêm bạn bè*/
 	$(document).on('click','.AddFriend',function(){
 		let id=$(this).parent().parent().data('userId');
 		socket.emit('make_friend',id);
 		$(this).attr('disabled','disabled');
 		$(this).addClass('Disabled');
+		// let obj={
+		// 	toUser:id,
+		// 	content:"đã gửi lời mời kết bạn cho bạn."
+		// }
+		// $.ajax({
+		// 	method:"POST",
+		// 	url:"/api/notifi/makefriend",
+		// 	contentType:"application/json,charset=utf-8",
+		// 	data:JSON.stringify(obj)
+		// }).done(()=>{
+		// 	socket.emit('make_friend',id);
+		// 	$(this).attr('disabled','disabled');
+		// 	$(this).addClass('Disabled');
+		// }).fail((err)=>{
+		// 	console.log(err);
+		// });
 	});
 	socket.on('make_friend',(res)=>{
 		let notifi=$('<p class="Notifi"></p>').data('senderId',res['senderId']);

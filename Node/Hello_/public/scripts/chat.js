@@ -239,9 +239,23 @@ $(document).ready(function(){
 
 	/*Sự kiện khi nhấn vào một Room*/
 	$(document).on('click','.List .Room',function(){
-		$('.ChatRoomName').text($(this).find('p').text());
-		socket.emit('joinChatRoom',$(this).data('roomId'));
+		let roomId=$(this).data('roomId');
+		$('.ChatRoom').data('roomId',roomId);
+		$('.ChatRoomName').text($(this).find('p').text());		
+		socket.emit('joinChatRoom',roomId);
 		$('.Messages').empty();
+		/*Load message*/
+		$.ajax({
+			method:"GET",
+			url:"/api/chat/message/"+roomId,
+			data:"json"
+		}).done((res)=>{
+			for(let i=0;i<res.length;i++){
+				$('.Messages').append(`<p><strong>${res[i]['fullName']}:</strong></p><p>${res[i]['content']}</p>`);
+			}
+		}).fail((err)=>{
+			console.log(err);
+		});
 	});
 	$(document).on('click','#FriendList .Room',function(){
 		$('.ChatRoomMember').empty();
@@ -250,23 +264,11 @@ $(document).ready(function(){
 	/*Nhắn tin*/
 	$(document).on('keypress','#EnterMess',function(event){
 		if(event.keyCode=='13'){
-			let mess=$(this).val();
-			if(mess){
-				$(this).val('');
-				socket.emit('message',mess);
-				let blockMess=$('.Messages')[0];
-				blockMess.scrollTop=blockMess.scrollHeight;
-			}
+			newMessage();
 		}
 	});
 	$(document).on('click','#SendMess',function(){
-		let mess=$('#EnterMess').val();
-		if(mess){
-			$('#EnterMess').val('');
-			socket.emit('message',mess);
-			let blockMess=$('.Messages')[0];
-			blockMess.scrollTop=blockMess.scrollHeight;
-		}
+		newMessage();
 	});
 	socket.on('message',(mess)=>{
 		$('.ChatRoom .Messages').append('<p>'+mess+'</p>');
@@ -289,4 +291,30 @@ function FindMember(dialog,keyWord,obj){
 	}).fail((err)=>{
 		console.log(err);
 	});
+}
+/*Insert mess vào database và hiển thị ra*/
+function newMessage(){
+	let mess=$('#EnterMess').val();
+	//Vệ sinh đầu vào tránh lỗi XSS chưa làm
+	//Xử lý các dấu ' " `
+	let roomId=$('.ChatRoom').data('roomId');
+	if(mess){
+		let obj={
+			mess:mess,
+			roomId:roomId
+		}
+		$.ajax({
+			method:"POST",
+			url:"/api/chat/message",
+			contentType:"application/json; charset=utf-8",
+			data:JSON.stringify(obj)
+		}).done(()=>{
+			$('#EnterMess').val('');
+			socket.emit('message',mess);
+			let blockMess=$('.Messages')[0];
+			blockMess.scrollTop=blockMess.scrollHeight;
+		}).fail((err)=>{
+			console.log(err);
+		});
+	}	
 }

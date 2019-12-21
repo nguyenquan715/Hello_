@@ -96,5 +96,15 @@ module.exports={
 		}).catch((err)=>{
 			console.log(err);
 		})
+	},
+	/*Load notification */
+	loadNotifi:(req,res)=>{
+		let query=`call loadNotifi(${req.session.userId});`;
+		models.sequelize.query(query).then((results)=>{
+			res.send(results);
+			res.end();
+		}).catch((err)=>{
+			console.log(err);
+		});
 	}
 }
