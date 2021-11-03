@@ -20,7 +20,7 @@
     "pug": "^2.0.4",
     "sequelize": "^5.21.2",
     "socket.io": "^2.3.0",
-    "validator": "^12.0.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "browser-sync": "^2.26.7",
